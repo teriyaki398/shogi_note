@@ -1,3 +1,7 @@
+![example workflow](https://github.com/teriyaki398/shogi_note/actions/workflows/test.yml/badge.svg?branch=develop)
+![example workflow](https://github.com/teriyaki398/shogi_note/actions/workflows/analyze.yml/badge.svg?branch=develop)
+[![codecov](https://codecov.io/gh/teriyaki398/shogi_note/branch/develop/graph/badge.svg?token=8XN4A318QM)](https://codecov.io/gh/teriyaki398/shogi_note)
+
 # shogi_note
 
 A new Flutter project.
