@@ -14,7 +14,8 @@ Describe feature.
 List of features or tasks which will be resolved by this issue.
 
 **Out of scope**
-Mention about tasks which will NOT be resolved by this issue.
+(if needed)
+Tasks which will NOT be resolved by this issue.
 
 **Due date**
 By when.
