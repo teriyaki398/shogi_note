@@ -2,7 +2,7 @@
 name: Milestone development
 about: Development feature in line with milestone
 title: ''
-labels: ''
+labels: development
 assignees: ''
 
 ---
