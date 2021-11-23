@@ -9,6 +9,7 @@ class ShogiNoteServiceImpl implements ShogiNoteService {
 
   @override
   Block getBlock() {
+    _repository.getBlock();
     // TODO: implement getBlock
     throw UnimplementedError();
   }
