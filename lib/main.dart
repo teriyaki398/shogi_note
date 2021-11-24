@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shogi_note/presentation/widget/block_widget.dart';
+import 'package:shogi_note/presentation/widget/shogi_board.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +32,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: BlockWidget()));
+    return const Scaffold(body: Center(child: ShogiBoard()));
   }
 }
