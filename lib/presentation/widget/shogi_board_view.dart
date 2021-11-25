@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ShogiBoardView extends StatelessWidget {
-  final String? sfen;
-  final double? size;
+  static const int rowNum = 9;
+  static const int colNum = 9;
 
-  const ShogiBoardView({Key? key, this.sfen, this.size}) : super(key: key);
+  final String sfen;
+
+  const ShogiBoardView({Key? key, required this.sfen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +17,16 @@ class ShogiBoardView extends StatelessWidget {
         AspectRatio(
             aspectRatio: 1.0,
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 9),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: rowNum),
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black45),
                   ),
-                  child: _getPiece("sfen", index),
+                  child: _getPiece(sfen, index),
                 );
               },
-              itemCount: 81,
+              itemCount: rowNum * colNum,
               shrinkWrap: true,
             ))
       ],
@@ -33,6 +35,6 @@ class ShogiBoardView extends StatelessWidget {
 
   Text _getPiece(String sfen, int index) {
     // TODO: Implement
-    return Text("$index" + this.sfen!);
+    return Text("$index" + sfen);
   }
 }

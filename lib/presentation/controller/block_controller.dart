@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:shogi_note/domain/model/block.dart';
 
 class BlockController with ChangeNotifier {
-  String comment = "Hello world";
+  final Block block;
 
-  void update(String comment) {
-    this.comment = comment;
-    notifyListeners();
-  }
+  BlockController({required this.block});
+
+  String get sfen => block.sfenList[0];
 }

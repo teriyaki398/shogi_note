@@ -9,7 +9,7 @@ class BlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
-      return ShogiBoardView(sfen: blockController.comment);
+      return ShogiBoardView(sfen: blockController.sfen);
     });
   }
 }
