@@ -1,6 +1,6 @@
 import 'package:shogi_note/domain/const/piece.dart';
 
-class PieceTypeMaps {
+class PieceVarietyMaps {
   static const List<PieceVariety> resources = [
     PieceVariety(piece: Piece.none, sfenChr: null),
     PieceVariety(piece: Piece.bFu, sfenChr: 'P'),

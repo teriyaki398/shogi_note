@@ -1,6 +1,6 @@
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
-import 'package:shogi_note/domain/const/piece_type_maps.dart';
+import 'package:shogi_note/domain/const/piece_variety_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/util/piece_util.dart';
 import 'package:shogi_note/util/string_util.dart';
@@ -49,7 +49,7 @@ class ShogiBoardUtil {
         int? length = int.tryParse(sfenChr);
         pieceList.addAll(List.generate(length!, (index) => Piece.none));
       } else {
-        pieceList.add(PieceTypeMaps.getPieceFromSfenChr(sfenChr));
+        pieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenChr));
       }
     }
 
@@ -67,9 +67,9 @@ class ShogiBoardUtil {
       if (StringUtil.isDigit(sfenFragment[index])) {
         int? count = int.tryParse(sfenFragment[index]);
         allPieceList.addAll(List.generate(
-            count! - 1, (index) => PieceTypeMaps.getPieceFromSfenChr(sfenFragment[index + 1])));
+            count! - 1, (index) => PieceVarietyMaps.getPieceFromSfenChr(sfenFragment[index + 1])));
       } else {
-        allPieceList.add(PieceTypeMaps.getPieceFromSfenChr(sfenFragment[index]));
+        allPieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenFragment[index]));
       }
     }
 
