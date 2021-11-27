@@ -3,19 +3,19 @@ import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/util/piece_util.dart';
+import 'package:shogi_note/domain/util/piece_util.dart';
 import 'package:shogi_note/util/string_util.dart';
 import 'package:tuple/tuple.dart';
 
-class ShogiBoardUtil {
+class BoardStateUtil {
+  BoardStateUtil._();
+
   static const String sfenSeparator = ' ';
   static const String sfenSubSeparator = '/';
   static const String sfenBlackChr = 'b';
   static const String sfenWhiteChr = 'w';
   static const String sfenEmptyHolder = '-';
   static const String sfenPromotePrefix = '+';
-
-  ShogiBoardUtil._();
 
   /*
   sfen smaple: lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1

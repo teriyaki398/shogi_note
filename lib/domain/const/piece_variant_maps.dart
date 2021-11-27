@@ -1,6 +1,8 @@
 import 'package:shogi_note/domain/const/piece.dart';
 
 class PieceVariantMaps {
+  PieceVariantMaps._();
+
   static const List<PieceVariant> resources = [
     PieceVariant(piece: Piece.nil, sfenChr: null, displayChr: null),
     PieceVariant(piece: Piece.bFu, sfenChr: 'P', displayChr: '歩'),
@@ -34,10 +36,7 @@ class PieceVariantMaps {
   ];
 
   static final Map<String?, Piece> _sfenChrToPieceMap = {for (PieceVariant e in resources) e.sfenChr: e.piece};
-
   static final Map<Piece, String?> _pieceToDisplayChrMap = {for (PieceVariant e in resources) e.piece: e.displayChr};
-
-  PieceVariantMaps._();
 
   static Piece sfenChrToPiece(String? shortSfenChr) {
     return _sfenChrToPieceMap[shortSfenChr] ?? Piece.nil;

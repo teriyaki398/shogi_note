@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/util/piece_util.dart';
+import 'package:shogi_note/domain/util/piece_util.dart';
 
 class ShogiBoardView extends StatelessWidget {
   static const int rowNum = 9;
