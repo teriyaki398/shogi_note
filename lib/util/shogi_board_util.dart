@@ -39,8 +39,7 @@ class ShogiBoardUtil {
     Tuple2<List<Piece>, List<Piece>> holder = _buildPieceHolder(sfenPieceHolder);
 
     return BoardState(
-        pieceOnBoard:
-            sfenPieceOnBoard.split(sfenSubSeparator).map((e) => _buildBoardRow(e)).toList(),
+        pieceOnBoard: sfenPieceOnBoard.split(sfenSubSeparator).map((e) => _buildBoardRow(e)).toList(),
         bHolder: holder.item1,
         wHolder: holder.item2,
         color: activeColor);
@@ -60,7 +59,7 @@ class ShogiBoardUtil {
       // 1~9 -> The number of consecutive empty cell
       if (StringUtil.isDigit(sfenBoardRow[index])) {
         int? count = int.tryParse(sfenBoardRow[index]);
-        pieceList.addAll(List.generate(count!, (index) => Piece.none));
+        pieceList.addAll(List.generate(count!, (index) => Piece.nil));
         continue;
       }
 
@@ -68,9 +67,8 @@ class ShogiBoardUtil {
       if (sfenBoardRow[index] == sfenPromotePrefix) {
         continue;
       }
-      if (index > 1 && sfenBoardRow[index - 1] == sfenPromotePrefix) {
-        pieceList.add(
-            PieceVarietyMaps.getPieceFromSfenChr(sfenBoardRow[index - 1] + sfenBoardRow[index]));
+      if (index > 0 && sfenBoardRow[index - 1] == sfenPromotePrefix) {
+        pieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenBoardRow[index - 1] + sfenBoardRow[index]));
         continue;
       }
 
@@ -91,28 +89,22 @@ class ShogiBoardUtil {
       return Tuple2(List.empty(), List.empty());
     }
 
-    List<Piece> allPieceList = [];
+    List<Piece> bPieceList = [];
+    List<Piece> wPieceList = [];
 
     for (int index = 0; index < sfenHolder.length; index++) {
       // 2~9 -> Indicate that next character is duplicated
       // if number is 5, add 4 pieces to list referring next character
       if (StringUtil.isDigit(sfenHolder[index])) {
         int? count = int.tryParse(sfenHolder[index]);
-        allPieceList.addAll(List.generate(
-            count! - 1, (index) => PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index + 1])));
+
+        Piece p = PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index + 1]);
+        for (int i = 0; i < count! - 1; i++) {
+          (PieceUtil.isBlackPiece(p)) ? bPieceList.add(p) : wPieceList.add(p);
+        }
       } else {
-        allPieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index]));
-      }
-    }
-
-    List<Piece> bPieceList = [];
-    List<Piece> wPieceList = [];
-
-    for (Piece piece in allPieceList) {
-      if (PieceUtil.isBlackPiece(piece)) {
-        wPieceList.add(piece);
-      } else if (PieceUtil.isWhitePiece(piece)) {
-        bPieceList.add(piece);
+        Piece p = PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index]);
+        (PieceUtil.isBlackPiece(p)) ? bPieceList.add(p) : wPieceList.add(p);
       }
     }
     return Tuple2<List<Piece>, List<Piece>>(bPieceList, wPieceList);

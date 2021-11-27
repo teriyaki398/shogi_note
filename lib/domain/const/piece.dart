@@ -1,5 +1,5 @@
 enum Piece {
-  none,
+  nil,
   bFu,
   bTo,
   bKy,

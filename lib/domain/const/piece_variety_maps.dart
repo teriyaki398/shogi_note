@@ -2,7 +2,7 @@ import 'package:shogi_note/domain/const/piece.dart';
 
 class PieceVarietyMaps {
   static const List<PieceVariety> resources = [
-    PieceVariety(piece: Piece.none, sfenChr: null, displayChr: null),
+    PieceVariety(piece: Piece.nil, sfenChr: null, displayChr: null),
     PieceVariety(piece: Piece.bFu, sfenChr: 'P', displayChr: '歩'),
     PieceVariety(piece: Piece.bKy, sfenChr: 'L', displayChr: '香'),
     PieceVariety(piece: Piece.bKe, sfenChr: 'N', displayChr: '桂'),
@@ -33,18 +33,16 @@ class PieceVarietyMaps {
     PieceVariety(piece: Piece.wOu, sfenChr: 'k', displayChr: '玉'),
   ];
 
-  static final Map<String?, Piece> _sfenChrToPieceMap = {
-    for (PieceVariety e in resources) e.sfenChr: e.piece
-  };
+  static final Map<String?, Piece> _sfenChrToPieceMap = {for (PieceVariety e in resources) e.sfenChr: e.piece};
 
-  static final Map<Piece, String?> _pieceToDisplayChrMap = {
-    for (PieceVariety e in resources) e.piece: e.displayChr
-  };
+  static final Map<Piece, String?> _pieceToDisplayChrMap = {for (PieceVariety e in resources) e.piece: e.displayChr};
+
+  PieceVarietyMaps._();
 
   static Piece getPieceFromSfenChr(String? shortSfenChr) {
     Piece? piece = _sfenChrToPieceMap[shortSfenChr];
     if (piece == null) {
-      return Piece.none;
+      return Piece.nil;
     } else {
       return piece;
     }
