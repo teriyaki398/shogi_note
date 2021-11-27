@@ -12,7 +12,13 @@ class ShogiBoardUtil {
   static const String sfenBlackChr = 'b';
   static const String sfenWhiteChr = 'w';
   static const String sfenEmptyHolder = '-';
+  static const String sfenPromotePrefix = '+';
 
+  ShogiBoardUtil._();
+
+  /*
+  sfen smaple: lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1
+   */
   static BoardState buildBoardState(String sfen) {
     // TODO: Validate sfenString
     List<String> sfenSnippets = sfen.split(sfenSeparator);
@@ -30,46 +36,72 @@ class ShogiBoardUtil {
       throw Exception(); // TODO: Throw appropriate exception
     }
 
-    Tuple2<List<Piece>, List<Piece>> holder = buildPieceHolder(sfenPieceHolder);
+    Tuple2<List<Piece>, List<Piece>> holder = _buildPieceHolder(sfenPieceHolder);
 
     return BoardState(
         pieceOnBoard:
-            sfenPieceOnBoard.split(sfenSubSeparator).map((e) => buildBoardRow(e)).toList(),
+            sfenPieceOnBoard.split(sfenSubSeparator).map((e) => _buildBoardRow(e)).toList(),
         bHolder: holder.item1,
         wHolder: holder.item2,
         color: activeColor);
   }
 
-  static List<Piece> buildBoardRow(String sfenFragment) {
+  /*
+  Consider the structure of board part of sfen like this
+  {boardRow}/{boardRow}/{boardRow}/{boardRow}/{boardRow}/{boardRow}/{boardRow}/{boardRow}/{boardRow}
+
+  sfenBoardRow: {boardRow} string
+   */
+  static List<Piece> _buildBoardRow(String sfenBoardRow) {
     // TODO: Validate sfenFragment
     List<Piece> pieceList = [];
 
-    for (String sfenChr in sfenFragment.split('')) {
-      if (StringUtil.isDigit(sfenChr)) {
-        int? length = int.tryParse(sfenChr);
-        pieceList.addAll(List.generate(length!, (index) => Piece.none));
-      } else {
-        pieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenChr));
+    for (int index = 0; index < sfenBoardRow.length; index++) {
+      // 1~9 -> The number of consecutive empty cell
+      if (StringUtil.isDigit(sfenBoardRow[index])) {
+        int? count = int.tryParse(sfenBoardRow[index]);
+        pieceList.addAll(List.generate(count!, (index) => Piece.none));
+        continue;
       }
-    }
 
+      // + -> promoted piece. consume two characters for one piece
+      if (sfenBoardRow[index] == sfenPromotePrefix) {
+        continue;
+      }
+      if (index > 1 && sfenBoardRow[index - 1] == sfenPromotePrefix) {
+        pieceList.add(
+            PieceVarietyMaps.getPieceFromSfenChr(sfenBoardRow[index - 1] + sfenBoardRow[index]));
+        continue;
+      }
+
+      // other -> normal piece. consume one character for one piece
+      pieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenBoardRow[index]));
+    }
     return pieceList;
   }
 
-  static Tuple2<List<Piece>, List<Piece>> buildPieceHolder(String sfenFragment) {
-    if (sfenFragment == sfenEmptyHolder) {
+  /*
+  Consider the structure of sfen like this
+  {board part} {action color} {piece holder} {move count}
+
+  sfenHolder: {piece holder} string
+   */
+  static Tuple2<List<Piece>, List<Piece>> _buildPieceHolder(String sfenHolder) {
+    if (sfenHolder == sfenEmptyHolder) {
       return Tuple2(List.empty(), List.empty());
     }
 
     List<Piece> allPieceList = [];
 
-    for (int index = 0; index < sfenFragment.length; index++) {
-      if (StringUtil.isDigit(sfenFragment[index])) {
-        int? count = int.tryParse(sfenFragment[index]);
+    for (int index = 0; index < sfenHolder.length; index++) {
+      // 2~9 -> Indicate that next character is duplicated
+      // if number is 5, add 4 pieces to list referring next character
+      if (StringUtil.isDigit(sfenHolder[index])) {
+        int? count = int.tryParse(sfenHolder[index]);
         allPieceList.addAll(List.generate(
-            count! - 1, (index) => PieceVarietyMaps.getPieceFromSfenChr(sfenFragment[index + 1])));
+            count! - 1, (index) => PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index + 1])));
       } else {
-        allPieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenFragment[index]));
+        allPieceList.add(PieceVarietyMaps.getPieceFromSfenChr(sfenHolder[index]));
       }
     }
 

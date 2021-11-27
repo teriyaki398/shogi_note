@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/piece_variety_maps.dart';
+import 'package:shogi_note/domain/model/board_state.dart';
+import 'package:shogi_note/util/piece_util.dart';
 
 class ShogiBoardView extends StatelessWidget {
   static const int rowNum = 9;
   static const int colNum = 9;
 
-  final String sfen;
+  final BoardState boardState;
 
-  const ShogiBoardView({Key? key, required this.sfen}) : super(key: key);
+  const ShogiBoardView({Key? key, required this.boardState}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class ShogiBoardView extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black45),
                   ),
-                  child: _getPiece(sfen, index),
+                  child: _getPieceCellView(index),
                 );
               },
               itemCount: rowNum * colNum,
@@ -33,8 +37,28 @@ class ShogiBoardView extends StatelessWidget {
     ));
   }
 
-  Text _getPiece(String sfen, int index) {
-    // TODO: Implement
-    return Text("$index" + sfen);
+  Widget _getPieceCellView(int index) {
+    int row = (index / rowNum).floor();
+    int col = index % colNum;
+
+    Piece piece = boardState.pieceOnBoard[row][col];
+
+    return Padding(
+        padding: const EdgeInsets.all(10), // TODO: Consider ratio of parent widget size
+        child: RotatedBox(
+          quarterTurns: PieceUtil.isBlackPiece(piece) ? 0 : 2, // Flip cell for white piece
+          child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(_getPieceDisplayChr(boardState.pieceOnBoard[row][col]))),
+        ));
+  }
+
+  String _getPieceDisplayChr(Piece piece) {
+    String? displayChr = PieceVarietyMaps.pieceToDisplayChr(piece);
+    if (displayChr == null) {
+      return '';
+    } else {
+      return displayChr;
+    }
   }
 }
