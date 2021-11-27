@@ -11,6 +11,5 @@ class BoardState extends Equatable {
   const BoardState({required this.pieceOnBoard, required this.bHolder, required this.wHolder, required this.color});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [pieceOnBoard, bHolder, wHolder, color];
 }

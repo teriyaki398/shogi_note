@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shogi_note/domain/const/piece.dart';
-import 'package:shogi_note/domain/const/piece_variety_maps.dart';
+import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/util/piece_util.dart';
 
@@ -47,18 +47,11 @@ class ShogiBoardView extends StatelessWidget {
         padding: const EdgeInsets.all(10), // TODO: Consider ratio of parent widget size
         child: RotatedBox(
           quarterTurns: PieceUtil.isBlackPiece(piece) ? 0 : 2, // Flip cell for white piece
-          child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(_getPieceDisplayChr(boardState.pieceOnBoard[row][col]))),
+          child: FittedBox(fit: BoxFit.fitWidth, child: Text(_getPieceDisplayChr(boardState.pieceOnBoard[row][col]))),
         ));
   }
 
   String _getPieceDisplayChr(Piece piece) {
-    String? displayChr = PieceVarietyMaps.pieceToDisplayChr(piece);
-    if (displayChr == null) {
-      return '';
-    } else {
-      return displayChr;
-    }
+    return PieceVariantMaps.pieceToDisplayChr(piece) ?? '';
   }
 }
