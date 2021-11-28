@@ -5,8 +5,8 @@ import 'package:shogi_note/domain/util/board_state_util.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/widget/block_view.dart';
 
-class ShogiPageView extends StatelessWidget {
-  const ShogiPageView({Key? key}) : super(key: key);
+class NotePageView extends StatelessWidget {
+  const NotePageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

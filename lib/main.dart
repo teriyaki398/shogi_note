@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shogi_note/presentation/widget/shogi_page_view.dart';
+import 'package:shogi_note/presentation/widget/note_page_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +15,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Scaffold(body: Center(child: ShogiPageView())));
+        home: const Scaffold(body: Center(child: NotePageView())));
   }
 }

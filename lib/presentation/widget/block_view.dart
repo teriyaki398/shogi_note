@@ -36,7 +36,7 @@ class BlockView extends StatelessWidget {
                         width: 400,
                         child: const Text('TBD')),
                     Container(height: 20),
-                    _getTextView(blockController.block.comment)
+                    _getCommentView(blockController.block.comment)
                   ]),
                 )
               ])));
@@ -74,13 +74,13 @@ class BlockView extends StatelessWidget {
     );
   }
 
-  Widget _getTextView(String text) {
+  Widget _getCommentView(String comment) {
     return Container(
         width: 400,
         height: 400,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black45),
         ),
-        child: Text(text));
+        child: Text(comment));
   }
 }
