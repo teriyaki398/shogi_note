@@ -28,7 +28,7 @@ class BoardStateUtil {
     String sfenActiveColor = sfenSnippets[1];
     String sfenPieceHolder = sfenSnippets[2];
 
-    Tuple2<List<Piece>, List<Piece>> holder = _buildPieceHolder(sfenPieceHolder);
+    Tuple2<List<Tuple2<Piece, int>>, List<Tuple2<Piece, int>>> holder = _buildPieceHolder(sfenPieceHolder);
     return BoardState(
         pieceOnBoard: sfenPieceOnBoard.split(sfenSubSeparator).map((e) => _buildBoardRow(e)).toList(),
         bHolder: holder.item1,
@@ -76,13 +76,13 @@ class BoardStateUtil {
 
   sfenHolder: {piece holder} string
    */
-  static Tuple2<List<Piece>, List<Piece>> _buildPieceHolder(String sfenHolder) {
+  static Tuple2<List<Tuple2<Piece, int>>, List<Tuple2<Piece, int>>> _buildPieceHolder(String sfenHolder) {
     if (sfenHolder == sfenEmptyHolder) {
       return Tuple2(List.empty(), List.empty());
     }
 
-    List<Piece> bPieceList = [];
-    List<Piece> wPieceList = [];
+    List<Tuple2<Piece, int>> bPieceList = [];
+    List<Tuple2<Piece, int>> wPieceList = [];
 
     for (num i in range(sfenHolder.length)) {
       i as int;
@@ -95,18 +95,15 @@ class BoardStateUtil {
       // previous character is 2~9 -> Consider duplication
       if (i > 0 && StringUtil.isDigit(sfenHolder[i - 1])) {
         int count = int.tryParse(sfenHolder[i - 1])!;
-
         Piece p = PieceVariantMaps.sfenChrToPiece(sfenHolder[i]);
-        PieceUtil.isBlackPiece(p)
-            ? bPieceList.addAll(range(count).map((e) => p))
-            : wPieceList.addAll(range(count).map((e) => p));
+        PieceUtil.isBlackPiece(p) ? bPieceList.add(Tuple2(p, count)) : wPieceList.add(Tuple2(p, count));
         continue;
       }
 
       // other -> normal case
       Piece p = PieceVariantMaps.sfenChrToPiece(sfenHolder[i]);
-      PieceUtil.isBlackPiece(p) ? bPieceList.add(p) : wPieceList.add(p);
+      PieceUtil.isBlackPiece(p) ? bPieceList.add(Tuple2(p, 1)) : wPieceList.add(Tuple2(p, 1));
     }
-    return Tuple2<List<Piece>, List<Piece>>(bPieceList, wPieceList);
+    return Tuple2<List<Tuple2<Piece, int>>, List<Tuple2<Piece, int>>>(bPieceList, wPieceList);
   }
 }
