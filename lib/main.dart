@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shogi_note/presentation/widget/page_view.dart';
+import 'package:shogi_note/presentation/widget/shogi_page_view.dart';
 
 void main() {
   runApp(const MyApp());
