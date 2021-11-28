@@ -9,7 +9,30 @@ class BlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
-      return ShogiBoardView(boardState: blockController.boardState);
+      return Container(
+          // // TODO: debug remove this later
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black45),
+          ),
+          child: Column(children: [
+            ShogiBoardView(boardState: blockController.boardState),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      blockController.onClickBackButton();
+                    },
+                    child: const Text('back')),
+                Container(width: 20),
+                ElevatedButton(
+                    onPressed: () {
+                      blockController.onClickNextButton();
+                    },
+                    child: const Text('next')),
+              ],
+            )
+          ]));
     });
   }
 }
