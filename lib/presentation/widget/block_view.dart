@@ -14,25 +14,39 @@ class BlockView extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black45),
           ),
-          child: Column(children: [
-            ShogiBoardView(boardState: blockController.boardState),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      blockController.onClickBackButton();
-                    },
-                    child: const Text('back')),
-                Container(width: 20),
-                ElevatedButton(
-                    onPressed: () {
-                      blockController.onClickNextButton();
-                    },
-                    child: const Text('next')),
-              ],
-            )
-          ]));
+          child: Column(
+              children: [ShogiBoardView(boardState: blockController.boardState), _getInterfaceView(blockController)]));
     });
+  }
+
+  Widget _getInterfaceView(BlockController blockController) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              blockController.onClickFirstButton();
+            },
+            child: const Text('first')),
+        Container(width: 20),
+        ElevatedButton(
+            onPressed: () {
+              blockController.onClickBackButton();
+            },
+            child: const Text('back')),
+        Container(width: 20),
+        ElevatedButton(
+            onPressed: () {
+              blockController.onClickNextButton();
+            },
+            child: const Text('next')),
+        Container(width: 20),
+        ElevatedButton(
+            onPressed: () {
+              blockController.onClickLastButton();
+            },
+            child: const Text('last')),
+      ],
+    );
   }
 }

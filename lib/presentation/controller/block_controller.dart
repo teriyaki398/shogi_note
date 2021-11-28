@@ -25,4 +25,14 @@ class BlockController with ChangeNotifier {
     stateIndex -= 1;
     notifyListeners();
   }
+
+  void onClickFirstButton() {
+    stateIndex = 0;
+    notifyListeners();
+  }
+
+  void onClickLastButton() {
+    stateIndex = block.boardStateList.length - 1;
+    notifyListeners();
+  }
 }
