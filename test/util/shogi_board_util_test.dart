@@ -3,6 +3,7 @@ import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/util/board_state_util.dart';
+import 'package:tuple/tuple.dart';
 
 Future main() async {
   test('test', () {
@@ -37,14 +38,13 @@ Future main() async {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bHi, Piece.bOu, Piece.nil, Piece.nil, Piece.nil],
       [Piece.wRy, Piece.nil, Piece.bGi, Piece.bKi, Piece.nil, Piece.bKi, Piece.bGi, Piece.bKe, Piece.bKy]
     ], bHolder: [
-      Piece.bGi,
-      Piece.bKe,
-      Piece.bFu
+      Tuple2(Piece.bGi, 1),
+      Tuple2(Piece.bKe, 1),
+      Tuple2(Piece.bFu, 1)
     ], wHolder: [
-      Piece.wKa,
-      Piece.wKy,
-      Piece.wFu,
-      Piece.wFu
+      Tuple2(Piece.wKa, 1),
+      Tuple2(Piece.wKy, 1),
+      Tuple2(Piece.wFu, 2)
     ], color: ActiveColor.black);
 
     expect(state2, expected2);
