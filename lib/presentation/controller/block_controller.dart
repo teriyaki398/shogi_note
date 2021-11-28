@@ -8,7 +8,7 @@ class BlockController with ChangeNotifier {
 
   BlockController({required this.block, this.stateIndex = 0});
 
-  BoardState get boardState => block.boardStateList[stateIndex];
+  BoardState get currentBoardState => block.boardStateList[stateIndex];
 
   void onClickNextButton() {
     if (stateIndex >= block.boardStateList.length - 1) {

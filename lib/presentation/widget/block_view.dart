@@ -9,13 +9,37 @@ class BlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
-      return Container(
-          // // TODO: debug remove this later
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black45),
-          ),
-          child: Column(
-              children: [ShogiBoardView(boardState: blockController.boardState), _getInterfaceView(blockController)]));
+      return Center(
+          child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black45),
+              ),
+              child: Row(children: [
+                Column(children: [
+                  ShogiBoardView(boardState: blockController.currentBoardState),
+                  _getInterfaceView(blockController)
+                ]),
+                Container(width: 40),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black45),
+                  ),
+                  width: 400,
+                  child: Column(children: [
+                    // TODO: Implement sequence view
+                    Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black45),
+                        ),
+                        height: 100,
+                        width: 400,
+                        child: const Text('TBD')),
+                    Container(height: 20),
+                    _getTextView(blockController.block.comment)
+                  ]),
+                )
+              ])));
     });
   }
 
@@ -48,5 +72,15 @@ class BlockView extends StatelessWidget {
             child: const Text('last')),
       ],
     );
+  }
+
+  Widget _getTextView(String text) {
+    return Container(
+        width: 400,
+        height: 400,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black45),
+        ),
+        child: Text(text));
   }
 }
