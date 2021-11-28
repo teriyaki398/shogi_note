@@ -2,12 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/util/shogi_board_util.dart';
+import 'package:shogi_note/domain/util/board_state_util.dart';
+import 'package:tuple/tuple.dart';
 
 Future main() async {
   test('test', () {
     String sfen1 = 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1';
-    BoardState state = ShogiBoardUtil.buildBoardState(sfen1);
+    BoardState state = BoardStateUtil.buildBoardState(sfen1);
 
     BoardState expected = const BoardState(pieceOnBoard: [
       [Piece.wKy, Piece.wKe, Piece.wGi, Piece.wKi, Piece.wOu, Piece.wKi, Piece.wGi, Piece.wKe, Piece.wKy],
@@ -24,7 +25,7 @@ Future main() async {
     expect(state, expected);
 
     String sfen2 = "lns1kg1+Bl/4g4/p1pp1p1pp/4p1p2/4n4/2P6/P2P1PPPP/4RK3/+r1SG1GSNL b SNPbl2p 1";
-    BoardState state2 = ShogiBoardUtil.buildBoardState(sfen2);
+    BoardState state2 = BoardStateUtil.buildBoardState(sfen2);
 
     BoardState expected2 = const BoardState(pieceOnBoard: [
       [Piece.wKy, Piece.wKe, Piece.wGi, Piece.nil, Piece.wOu, Piece.wKi, Piece.nil, Piece.bUm, Piece.wKy],
@@ -37,14 +38,13 @@ Future main() async {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bHi, Piece.bOu, Piece.nil, Piece.nil, Piece.nil],
       [Piece.wRy, Piece.nil, Piece.bGi, Piece.bKi, Piece.nil, Piece.bKi, Piece.bGi, Piece.bKe, Piece.bKy]
     ], bHolder: [
-      Piece.bGi,
-      Piece.bKe,
-      Piece.bFu
+      Tuple2(Piece.bGi, 1),
+      Tuple2(Piece.bKe, 1),
+      Tuple2(Piece.bFu, 1)
     ], wHolder: [
-      Piece.wKa,
-      Piece.wKy,
-      Piece.wFu,
-      Piece.wFu
+      Tuple2(Piece.wKa, 1),
+      Tuple2(Piece.wKy, 1),
+      Tuple2(Piece.wFu, 2)
     ], color: ActiveColor.black);
 
     expect(state2, expected2);
