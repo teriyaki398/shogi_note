@@ -3,36 +3,38 @@ import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 
 class BlockController with ChangeNotifier {
-  final Block block;
-  int stateIndex;
+  final Block _block;
+  int _stateIndex = 0;
 
-  BlockController({required this.block, this.stateIndex = 0});
+  BlockController({required Block block}) : _block = block;
 
-  BoardState get currentBoardState => block.boardStateList[stateIndex];
+  String get comment => _block.comment;
+
+  BoardState get currentBoardState => _block.boardStateList[_stateIndex];
 
   void onClickNextButton() {
-    if (stateIndex >= block.boardStateList.length - 1) {
+    if (_stateIndex >= _block.boardStateList.length - 1) {
       return;
     }
-    stateIndex += 1;
+    _stateIndex += 1;
     notifyListeners();
   }
 
   void onClickBackButton() {
-    if (stateIndex <= 0) {
+    if (_stateIndex <= 0) {
       return;
     }
-    stateIndex -= 1;
+    _stateIndex -= 1;
     notifyListeners();
   }
 
   void onClickFirstButton() {
-    stateIndex = 0;
+    _stateIndex = 0;
     notifyListeners();
   }
 
   void onClickLastButton() {
-    stateIndex = block.boardStateList.length - 1;
+    _stateIndex = _block.boardStateList.length - 1;
     notifyListeners();
   }
 }

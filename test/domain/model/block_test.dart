@@ -9,19 +9,22 @@ Future main() async {
         boardStateList: [
           BoardStateUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1")
         ],
-        comment: "test comment");
+        comment: "test comment",
+        nextBlockIdList: List.empty());
     Block src2 = Block(
         blockId: "894f1344-7af5-4694-8f97-c705b9318803",
         boardStateList: [
           BoardStateUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1")
         ],
-        comment: "test comment");
+        comment: "test comment",
+        nextBlockIdList: List.empty());
     Block src3 = Block(
         blockId: "cf84afbe-9b06-495e-9887-9bf7e6114406",
         boardStateList: [
           BoardStateUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1")
         ],
-        comment: "test comment");
+        comment: "test comment",
+        nextBlockIdList: List.empty());
 
     expect(src == src2, isFalse);
     expect(src == src3, isTrue);
