@@ -16,6 +16,7 @@ class BlockView extends StatelessWidget {
                 border: Border.all(color: Colors.black45),
               ),
               child: Row(children: [
+                Container(width: 20),
                 Column(children: [
                   ShogiBoardView(boardState: blockController.currentBoardState),
                   _getInterfaceView(blockController)

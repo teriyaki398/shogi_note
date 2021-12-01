@@ -42,7 +42,7 @@ class ShogiNoteServiceImpl implements ShogiNoteService {
         nextBlockIdList: const [],
         comment: "test comment");
 
-    return Note(pageId: "784a440d-cf7b-43f1-b4bf-4bf0efed26b7", blockList: [block, block, block, block]);
+    return Note(pageId: "784a440d-cf7b-43f1-b4bf-4bf0efed26b7", blockList: [block]);
   }
 
   @override
