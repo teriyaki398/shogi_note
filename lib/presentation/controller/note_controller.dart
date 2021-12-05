@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
-import 'package:shogi_note/application/shogi_note_service.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/note.dart';
+import 'package:shogi_note/service/shogi_note_service.dart';
 import 'package:uuid/uuid.dart';
 
 class NoteController with ChangeNotifier {
-  Note _note;
+  late Note _note;
   final ShogiNoteService _shogiNoteService;
 
-  NoteController({required Note note, required ShogiNoteService shogiNoteService})
-      : _note = note,
-        _shogiNoteService = shogiNoteService;
+  NoteController({required ShogiNoteService shogiNoteService}) : _shogiNoteService = shogiNoteService {
+    _note = _shogiNoteService.getNote();
+  }
 
   Note get note => _note;
 

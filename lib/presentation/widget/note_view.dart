@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shogi_note/application/shogi_note_service.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/controller/note_controller.dart';
+import 'package:shogi_note/service/shogi_note_service.dart';
 
 import 'block_view.dart';
 

@@ -1,7 +1,7 @@
-import 'package:shogi_note/application/port/shogi_note_repository.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/note.dart';
 import 'package:shogi_note/domain/util/board_state_util.dart';
+import 'package:shogi_note/service/port/shogi_note_repository.dart';
 
 import '../shogi_note_service.dart';
 
