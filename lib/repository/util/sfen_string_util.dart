@@ -7,8 +7,8 @@ import 'package:shogi_note/domain/util/piece_util.dart';
 import 'package:shogi_note/util/string_util.dart';
 import 'package:tuple/tuple.dart';
 
-class BoardStateUtil {
-  BoardStateUtil._();
+class SfenStringUtil {
+  SfenStringUtil._();
 
   static const String sfenSeparator = ' ';
   static const String sfenSubSeparator = '/';

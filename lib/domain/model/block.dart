@@ -6,10 +6,8 @@ class Block extends Equatable {
   final String blockId;
   final List<BoardState> boardStateList;
   final String comment;
-  final List<String> nextBlockIdList;
 
-  const Block(
-      {required this.blockId, required this.boardStateList, required this.comment, required this.nextBlockIdList});
+  const Block({required this.blockId, required this.boardStateList, required this.comment});
 
   @override
   List<Object?> get props => [blockId, boardStateList, comment];

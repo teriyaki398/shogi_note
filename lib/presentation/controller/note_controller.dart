@@ -21,8 +21,7 @@ class NoteController with ChangeNotifier {
   void onClickBlockAddButton() {
     Block lastBlock = _note.lastBlock;
     BoardState lastBoardState = lastBlock.lastBoardState;
-    Block newBlock = Block(
-        blockId: const Uuid().toString(), boardStateList: [lastBoardState], comment: "", nextBlockIdList: List.empty());
+    Block newBlock = Block(blockId: const Uuid().toString(), boardStateList: [lastBoardState], comment: "");
 
     List<Block> blockList = List.of(_note.blockList + [newBlock]);
     Note newNote = Note(pageId: _note.pageId, blockList: blockList);
