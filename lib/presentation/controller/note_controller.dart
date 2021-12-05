@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiver/iterables.dart';
 import 'package:shogi_note/application/shogi_note_service.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
@@ -16,10 +17,10 @@ class NoteController with ChangeNotifier {
   Note get note => _note;
 
   // Create new block when add button is clicked
+  // Initial board state of newly created block is the last board state of previous block
   void onClickBlockAddButton() {
-    // Generate initial block
-    Block lastBlock = _note.blockList[_note.blockList.length - 1];
-    BoardState lastBoardState = lastBlock.boardStateList[lastBlock.boardStateList.length - 1];
+    Block lastBlock = _note.lastBlock;
+    BoardState lastBoardState = lastBlock.lastBoardState;
     Block newBlock = Block(
         blockId: const Uuid().toString(), boardStateList: [lastBoardState], comment: "", nextBlockIdList: List.empty());
 
@@ -27,6 +28,18 @@ class NoteController with ChangeNotifier {
     Note newNote = Note(pageId: _note.pageId, blockList: blockList);
 
     _note = newNote;
+    notifyListeners();
+  }
+
+  // Delete last block when delete button is clicked
+  void onClickBlockDeleteButton(int index) {
+    if (index == 0 || index < _note.blockList.length - 1) {
+      return;
+    }
+    List<Block> currentBlockList = _note.blockList;
+    List<Block> blockListWithDropLast =
+        range(currentBlockList.length - 1).map((i) => currentBlockList[i as int]).toList();
+    _note = Note(pageId: _note.pageId, blockList: blockListWithDropLast);
     notifyListeners();
   }
 }

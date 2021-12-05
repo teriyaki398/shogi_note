@@ -9,4 +9,6 @@ class Note extends Equatable {
 
   @override
   List<Object?> get props => [pageId, blockList];
+
+  Block get lastBlock => blockList[blockList.length - 1];
 }

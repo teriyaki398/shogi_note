@@ -16,14 +16,26 @@ class NotePageView extends StatelessWidget {
         return Scaffold(
           body: Center(
               child: SizedBox(
-                  width: 850,
+                  width: 950,
                   child: ListView.builder(
                     itemCount: noteController.note.blockList.length,
                     itemBuilder: (context, index) {
-                      return MultiProvider(providers: [
-                        ChangeNotifierProvider(
-                            create: (context) => BlockController(block: noteController.note.blockList[index]))
-                      ], child: const BlockView());
+                      return MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                                create: (context) => BlockController(block: noteController.note.blockList[index]))
+                          ],
+                          child: Row(
+                            children: [
+                              const BlockView(),
+                              Container(width: 40),
+                              CloseButton(
+                                onPressed: () {
+                                  noteController.onClickBlockDeleteButton(index);
+                                },
+                              )
+                            ],
+                          ));
                     },
                   ))),
           floatingActionButton: FloatingActionButton(
