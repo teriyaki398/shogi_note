@@ -34,7 +34,7 @@ class BlockView extends StatelessWidget {
                         width: 400,
                         child: const Text('TBD')),
                     Container(height: 20),
-                    _getCommentView(blockController.displayComment)
+                    _getCommentView(blockController.block.comment)
                   ]),
                 )
               ])));

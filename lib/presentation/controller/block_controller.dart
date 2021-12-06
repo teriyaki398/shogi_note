@@ -20,8 +20,6 @@ class BlockController with ChangeNotifier {
 
   Block get block => _block;
 
-  String get displayComment => _block.comment;
-
   BoardState get currentBoardState => _block.boardStateList[_displayBoardStateIndex];
 
   // TODO: Implementation is not completed
