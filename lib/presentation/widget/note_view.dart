@@ -20,20 +20,29 @@ class NotePageView extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: noteController.note.blockList.length,
                     itemBuilder: (context, index) {
+                      BlockController blockController = BlockController(block: noteController.note.blockList[index]);
+
                       return MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                                create: (context) => BlockController(block: noteController.note.blockList[index]))
-                          ],
+                          providers: [ChangeNotifierProvider(create: (context) => blockController)],
                           child: Row(
                             children: [
                               const BlockView(),
                               Container(width: 40),
-                              CloseButton(
-                                onPressed: () {
-                                  noteController.onClickBlockDeleteButton(index);
-                                },
-                              )
+                              Column(
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        noteController.onClickBlockDeleteButton(index);
+                                      },
+                                      child: const Text('delete')),
+                                  Container(height: 20),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        noteController.onClickBlockSaveButton(blockController.block, index);
+                                      },
+                                      child: const Text('save'))
+                                ],
+                              ),
                             ],
                           ));
                     },

@@ -18,6 +18,8 @@ class BlockController with ChangeNotifier {
 
   BlockController({required Block block}) : _block = block;
 
+  Block get block => _block;
+
   String get displayComment => _block.comment;
 
   BoardState get currentBoardState => _block.boardStateList[_displayBoardStateIndex];
