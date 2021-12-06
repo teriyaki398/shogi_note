@@ -12,5 +12,7 @@ class Block extends Equatable {
   @override
   List<Object?> get props => [blockId, boardStateList, comment];
 
-  BoardState get lastBoardState => boardStateList[boardStateList.length - 1];
+  int get lastIndex => boardStateList.length - 1;
+
+  BoardState get lastBoardState => boardStateList[lastIndex];
 }
