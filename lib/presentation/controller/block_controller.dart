@@ -1,38 +1,72 @@
 import 'package:flutter/foundation.dart';
+import 'package:shogi_note/domain/builder/block_builder.dart';
+import 'package:shogi_note/domain/builder/board_state_builder.dart';
 import 'package:shogi_note/domain/model/block.dart';
+import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 
 class BlockController with ChangeNotifier {
-  final Block block;
-  int stateIndex;
+  Block _block;
+  int _stateIndex = 0;
+  BoardPosition? _clickedPos;
 
-  BlockController({required this.block, this.stateIndex = 0});
+  final BlockBuilder _blockBuilder = BlockBuilder.instance();
+  final BoardStateBuilder _boardStateBuilder = BoardStateBuilder.instance();
 
-  BoardState get currentBoardState => block.boardStateList[stateIndex];
+  BlockController({required Block block}) : _block = block;
 
-  void onClickNextButton() {
-    if (stateIndex >= block.boardStateList.length - 1) {
+  Block get block => _block;
+
+  BoardState get currentBoardState => _block.boardStateList[_stateIndex];
+
+  // TODO: Implementation is not completed
+  void onClickBoardCell(BoardPosition pos) {
+    if (_clickedPos == null) {
+      _clickedPos = pos;
+      notifyListeners();
       return;
     }
-    stateIndex += 1;
+
+    if (pos == _clickedPos) {
+      _clickedPos = null;
+      notifyListeners();
+      return;
+    }
+
+    BoardState newBoardState = _boardStateBuilder.movePiece(currentBoardState, _clickedPos!, pos);
+    _block = _blockBuilder.addBoardState(_block, newBoardState);
+    _stateIndex += 1;
+    _clickedPos = null;
+    notifyListeners();
+  }
+
+  bool isClickedCell(BoardPosition pos) {
+    return _clickedPos == pos;
+  }
+
+  void onClickNextButton() {
+    if (_stateIndex >= _block.boardStateList.length - 1) {
+      return;
+    }
+    _stateIndex += 1;
     notifyListeners();
   }
 
   void onClickBackButton() {
-    if (stateIndex <= 0) {
+    if (_stateIndex <= 0) {
       return;
     }
-    stateIndex -= 1;
+    _stateIndex -= 1;
     notifyListeners();
   }
 
   void onClickFirstButton() {
-    stateIndex = 0;
+    _stateIndex = 0;
     notifyListeners();
   }
 
   void onClickLastButton() {
-    stateIndex = block.boardStateList.length - 1;
+    _stateIndex = _block.boardStateList.length - 1;
     notifyListeners();
   }
 }

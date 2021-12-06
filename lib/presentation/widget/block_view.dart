@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
-import 'package:shogi_note/presentation/widget/shogi_board_view.dart';
+import 'package:shogi_note/presentation/widget/board_view.dart';
 
 class BlockView extends StatelessWidget {
   const BlockView({Key? key}) : super(key: key);
@@ -16,10 +16,8 @@ class BlockView extends StatelessWidget {
                 border: Border.all(color: Colors.black45),
               ),
               child: Row(children: [
-                Column(children: [
-                  ShogiBoardView(boardState: blockController.currentBoardState),
-                  _getInterfaceView(blockController)
-                ]),
+                Container(width: 20),
+                Column(children: [const BoardView(), _getInterfaceView(blockController)]),
                 Container(width: 40),
                 Container(
                   decoration: BoxDecoration(
@@ -36,7 +34,7 @@ class BlockView extends StatelessWidget {
                         width: 400,
                         child: const Text('TBD')),
                     Container(height: 20),
-                    _getTextView(blockController.block.comment)
+                    _getCommentView(blockController.block.comment)
                   ]),
                 )
               ])));
@@ -74,13 +72,13 @@ class BlockView extends StatelessWidget {
     );
   }
 
-  Widget _getTextView(String text) {
+  Widget _getCommentView(String comment) {
     return Container(
         width: 400,
         height: 400,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black45),
         ),
-        child: Text(text));
+        child: Text(comment));
   }
 }
