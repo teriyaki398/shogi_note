@@ -40,9 +40,15 @@ class NotePageView extends StatelessWidget {
                                       onPressed: () {
                                         noteController.onClickBlockSaveButton(blockController.block, index);
                                       },
-                                      child: const Text('save'))
+                                      child: const Text('save')),
+                                  Container(height: 20),
+                                  ElevatedButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.edit),
+                                    label: Text('edit'),
+                                  )
                                 ],
-                              ),
+                              )
                             ],
                           ));
                     },

@@ -13,7 +13,7 @@ class ShogiNoteServiceImpl implements ShogiNoteService {
         boardStateList: [
           SfenStringUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1")
         ],
-        comment: "")
+        comment: "This is initial comment")
   ]);
 
   // Block block = Block(

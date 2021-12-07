@@ -79,6 +79,12 @@ class BlockView extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black45),
         ),
-        child: Text(comment));
+        child: TextFormField(
+          initialValue: comment,
+          readOnly: true,
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          autofocus: true,
+        ));
   }
 }
