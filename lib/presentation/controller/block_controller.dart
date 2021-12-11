@@ -67,6 +67,11 @@ class BlockController with ChangeNotifier {
     notifyListeners();
   }
 
+  void onClickSaveButton() {
+    _blockMode = BlockMode.read;
+    notifyListeners();
+  }
+
   bool isClickedCell(BoardPosition pos) {
     return _holdingPos == pos;
   }

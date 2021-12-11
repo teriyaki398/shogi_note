@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/widget/board_view.dart';
 
@@ -9,29 +10,55 @@ class BlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
-      return Center(
-          child: Container(
-              alignment: Alignment.center,
-              child: Row(children: [
-                Container(width: 20),
-                Column(children: [const BoardView(), _getInterfaceView(blockController)]),
-                Container(width: 40),
-                Container(
-                  width: 400,
-                  child: Column(children: [
-                    // TODO: Implement sequence view
-                    Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black45),
-                        ),
-                        height: 100,
-                        width: 400,
-                        child: const Text('TBD')),
-                    Container(height: 20),
-                    _getCommentView(blockController.block.comment)
-                  ]),
-                )
-              ])));
+      return Column(
+        children: [
+          // Block interface bar
+          () {
+            if (blockController.blockMode == BlockMode.read) {
+              return ElevatedButton.icon(
+                onPressed: () {
+                  blockController.onClickEditButton();
+                },
+                icon: const Icon(Icons.edit),
+                label: const Text('edit'),
+              );
+            } else {
+              return ElevatedButton.icon(
+                onPressed: () {
+                  blockController.onClickSaveButton();
+                },
+                icon: const Icon(Icons.save),
+                label: const Text('save'),
+              );
+            }
+          }(),
+          const SizedBox(height: 20),
+
+          // Main view
+          Row(
+            children: [
+              Container(width: 20),
+              Column(children: [const BoardView(), _getInterfaceView(blockController)]),
+              Container(width: 40),
+              SizedBox(
+                width: 400,
+                child: Column(children: [
+                  // TODO: Implement sequence view
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black45),
+                      ),
+                      height: 100,
+                      width: 400,
+                      child: const Text('TBD')),
+                  Container(height: 20),
+                  _getCommentView(blockController.block.comment)
+                ]),
+              )
+            ],
+          )
+        ],
+      );
     });
   }
 

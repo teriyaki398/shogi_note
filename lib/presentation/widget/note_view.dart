@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/controller/note_controller.dart';
 import 'package:shogi_note/service/shogi_note_service.dart';
@@ -39,47 +38,27 @@ class NotePageView extends StatelessWidget {
 
     return MultiProvider(
         providers: [ChangeNotifierProvider(create: (context) => blockController)],
-        child: Column(children: [
-          // Interface bar
-          Row(children: () {
-            if (blockController.blockMode == BlockMode.read) {
-              return List.of([
-                ElevatedButton.icon(
-                  onPressed: () {
-                    blockController.onClickEditButton();
-                  },
-                  icon: Icon(Icons.edit),
-                  label: Text('edit'),
-                )
-              ]);
-            } else {
-              return [Text('a')];
-            }
-          }()),
-
-          // Content
-          Row(
-            children: [
-              const BlockView(),
-              Container(width: 40),
-              Column(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        noteController.onClickBlockDeleteButton(index);
-                      },
-                      child: const Text('delete')),
-                  Container(height: 20),
-                  ElevatedButton(
-                      onPressed: () {
-                        noteController.onClickBlockSaveButton(blockController.block, index);
-                      },
-                      child: const Text('save')),
-                  Container(height: 20)
-                ],
-              )
-            ],
-          )
-        ]));
+        child: Row(
+          children: [
+            const BlockView(),
+            Container(width: 40),
+            Column(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      noteController.onClickBlockDeleteButton(index);
+                    },
+                    child: const Text('delete')),
+                Container(height: 20),
+                ElevatedButton(
+                    onPressed: () {
+                      noteController.onClickBlockSaveButton(blockController.block, index);
+                    },
+                    child: const Text('save')),
+                Container(height: 20)
+              ],
+            )
+          ],
+        ));
   }
 }
