@@ -12,17 +12,11 @@ class BlockView extends StatelessWidget {
       return Center(
           child: Container(
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black45),
-              ),
               child: Row(children: [
                 Container(width: 20),
                 Column(children: [const BoardView(), _getInterfaceView(blockController)]),
                 Container(width: 40),
                 Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black45),
-                  ),
                   width: 400,
                   child: Column(children: [
                     // TODO: Implement sequence view
