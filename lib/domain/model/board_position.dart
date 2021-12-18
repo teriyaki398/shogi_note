@@ -1,17 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class BoardPosition extends Equatable {
-  final int _row;
-  final int _col;
+  final int row;
+  final int col;
 
-  const BoardPosition({required int row, required int col})
-      : _row = row,
-        _col = col;
-
-  int get row => _row;
-
-  int get col => _col;
+  const BoardPosition({required this.row, required this.col});
 
   @override
-  List<Object?> get props => [_row, _col];
+  List<Object?> get props => [row, col];
 }

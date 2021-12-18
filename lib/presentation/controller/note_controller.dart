@@ -41,4 +41,14 @@ class NoteController with ChangeNotifier {
     _note = Note(pageId: _note.pageId, blockList: blockListWithDropLast);
     notifyListeners();
   }
+
+  // Update i-th block with given block object
+  // And save it on repository
+  void onClickBlockSaveButton(Block block, int index) {
+    List<Block> blockList = _note.blockList;
+    blockList[index] = block;
+
+    _shogiNoteService.setNote(Note(pageId: _note.pageId, blockList: blockList));
+    notifyListeners();
+  }
 }

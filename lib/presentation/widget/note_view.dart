@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/controller/note_controller.dart';
 import 'package:shogi_note/service/shogi_note_service.dart';
@@ -20,22 +21,7 @@ class NotePageView extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: noteController.note.blockList.length,
                     itemBuilder: (context, index) {
-                      return MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider(
-                                create: (context) => BlockController(block: noteController.note.blockList[index]))
-                          ],
-                          child: Row(
-                            children: [
-                              const BlockView(),
-                              Container(width: 40),
-                              CloseButton(
-                                onPressed: () {
-                                  noteController.onClickBlockDeleteButton(index);
-                                },
-                              )
-                            ],
-                          ));
+                      return _buildBlockView(noteController, index);
                     },
                   ))),
           floatingActionButton: FloatingActionButton(
@@ -46,5 +32,56 @@ class NotePageView extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _buildBlockView(NoteController noteController, int index) {
+    return ChangeNotifierProxyProvider<NoteController, BlockController>(
+        create: (_) => BlockController(block: noteController.note.blockList[index]),
+        update: (_, noteController, blockController) => blockController!..update(noteController.note.blockList[index]),
+        child: Column(children: [
+          _getBlockInterfaceView(index),
+          Container(height: 20),
+          const BlockView(),
+          Container(height: 40)
+        ]));
+  }
+
+  Widget _getBlockInterfaceView(int index) {
+    return Consumer2<NoteController, BlockController>(builder: (_, noteController, blockController, __) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: () {
+          if (blockController.blockMode == BlockMode.read) {
+            return List.of([
+              ElevatedButton.icon(
+                onPressed: () {
+                  blockController.onClickEditButton();
+                },
+                icon: const Icon(Icons.edit),
+                label: const Text('edit'),
+              )
+            ]);
+          } else {
+            return List.of([
+              ElevatedButton.icon(
+                onPressed: () {
+                  noteController.onClickBlockSaveButton(blockController.block, index);
+                  blockController.onClickSaveButton();
+                },
+                icon: const Icon(Icons.save),
+                label: const Text('save'),
+              ),
+              Container(width: 10),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    noteController.onClickBlockDeleteButton(index);
+                  },
+                  icon: const Icon(Icons.delete),
+                  label: const Text('delete'))
+            ]);
+          }
+        }(),
+      );
+    });
   }
 }

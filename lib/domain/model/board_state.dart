@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:tuple/tuple.dart';
 
 class BoardState extends Equatable {
@@ -13,4 +14,8 @@ class BoardState extends Equatable {
 
   @override
   List<Object?> get props => [pieceOnBoard, bHolder, wHolder, color];
+
+  Piece getPiece(BoardPosition pos) {
+    return pieceOnBoard[pos.row][pos.col];
+  }
 }
