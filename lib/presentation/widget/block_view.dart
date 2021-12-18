@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
+import 'package:shogi_note/presentation/controller/note_controller.dart';
 import 'package:shogi_note/presentation/widget/board_view.dart';
 
 class BlockView extends StatelessWidget {
@@ -9,36 +9,13 @@ class BlockView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BlockController>(builder: (_, blockController, __) {
+    return Consumer2<BlockController, NoteController>(builder: (_, blockController, noteController, __) {
       return Column(
         children: [
-          // Block interface bar
-          () {
-            if (blockController.blockMode == BlockMode.read) {
-              return ElevatedButton.icon(
-                onPressed: () {
-                  blockController.onClickEditButton();
-                },
-                icon: const Icon(Icons.edit),
-                label: const Text('edit'),
-              );
-            } else {
-              return ElevatedButton.icon(
-                onPressed: () {
-                  blockController.onClickSaveButton();
-                },
-                icon: const Icon(Icons.save),
-                label: const Text('save'),
-              );
-            }
-          }(),
-          const SizedBox(height: 20),
-
-          // Main view
           Row(
             children: [
               Container(width: 20),
-              Column(children: [const BoardView(), _getInterfaceView(blockController)]),
+              Column(children: [const BoardView(), _getBoardInterfaceView(blockController)]),
               Container(width: 40),
               SizedBox(
                 width: 400,
@@ -62,7 +39,7 @@ class BlockView extends StatelessWidget {
     });
   }
 
-  Widget _getInterfaceView(BlockController blockController) {
+  Widget _getBoardInterfaceView(BlockController blockController) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

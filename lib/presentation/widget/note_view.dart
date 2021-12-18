@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:shogi_note/presentation/controller/note_controller.dart';
 import 'package:shogi_note/service/shogi_note_service.dart';
@@ -38,27 +39,46 @@ class NotePageView extends StatelessWidget {
 
     return MultiProvider(
         providers: [ChangeNotifierProvider(create: (context) => blockController)],
-        child: Row(
-          children: [
-            const BlockView(),
-            Container(width: 40),
-            Column(
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      noteController.onClickBlockDeleteButton(index);
-                    },
-                    child: const Text('delete')),
-                Container(height: 20),
-                ElevatedButton(
-                    onPressed: () {
-                      noteController.onClickBlockSaveButton(blockController.block, index);
-                    },
-                    child: const Text('save')),
-                Container(height: 20)
-              ],
-            )
-          ],
+        child: Column(
+          children: [_getBlockInterfaceView(index), Container(height: 20), const BlockView()],
         ));
+  }
+
+  Widget _getBlockInterfaceView(int index) {
+    return Consumer2<NoteController, BlockController>(builder: (_, noteController, blockController, __) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: () {
+          if (blockController.blockMode == BlockMode.read) {
+            return List.of([
+              ElevatedButton.icon(
+                onPressed: () {
+                  blockController.onClickEditButton();
+                },
+                icon: const Icon(Icons.edit),
+                label: const Text('edit'),
+              )
+            ]);
+          } else {
+            return List.of([
+              ElevatedButton.icon(
+                onPressed: () {
+                  blockController.onClickSaveButton();
+                },
+                icon: const Icon(Icons.save),
+                label: const Text('save'),
+              ),
+              Container(width: 10),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    noteController.onClickBlockDeleteButton(index);
+                  },
+                  icon: const Icon(Icons.delete),
+                  label: const Text('delete'))
+            ]);
+          }
+        }(),
+      );
+    });
   }
 }
