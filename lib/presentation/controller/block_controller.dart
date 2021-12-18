@@ -27,6 +27,12 @@ class BlockController with ChangeNotifier {
 
   BoardState get currentBoardState => _block.boardStateList[_displayBoardStateIndex];
 
+  void update(Block block) {
+    _block = block;
+    _displayBoardStateIndex = 0;
+    _holdingPos = null;
+  }
+
   // TODO: Implementation is not completed
   void onClickBoardCell(BoardPosition pos) {
     // TODO: Consider user can input move action with overwriting

@@ -7,6 +7,7 @@ import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/util/piece_util.dart';
+import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:tuple/tuple.dart';
 
@@ -20,17 +21,21 @@ class BoardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: cellWidth * colNum,
-      child: Column(
-        children: [
-          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
-          const SizedBox(height: 10),
-          SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
-          const SizedBox(height: 10),
-          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
-        ],
-      ),
+    return Consumer<BlockController>(
+      builder: (_, __, ___) {
+        return SizedBox(
+          width: cellWidth * colNum,
+          child: Column(
+            children: [
+              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
+              const SizedBox(height: 10),
+              SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
+              const SizedBox(height: 10),
+              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -45,7 +50,7 @@ class BoardView extends StatelessWidget {
             itemBuilder: (context, index) {
               BoardPosition pos = BoardPosition(row: (index / rowNum).floor(), col: index % colNum);
               Piece piece = boardState.pieceOnBoard[pos.row][pos.col];
-              
+
               return _getBoardCellView(piece, pos);
             },
             itemCount: rowNum * colNum,
@@ -61,7 +66,9 @@ class BoardView extends StatelessWidget {
 
       return GestureDetector(
           onTap: () {
-            blockController.onClickBoardCell(pos);
+            if (blockController.blockMode == BlockMode.edit) {
+              blockController.onClickBoardCell(pos);
+            }
           },
           child: Container(
               decoration: BoxDecoration(

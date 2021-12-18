@@ -3,14 +3,12 @@ import 'package:quiver/iterables.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/note.dart';
-import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/service/shogi_note_service.dart';
 import 'package:uuid/uuid.dart';
 
 class NoteController with ChangeNotifier {
   late Note _note;
   final ShogiNoteService _shogiNoteService;
-  BlockMode blockMode = BlockMode.read;
 
   NoteController({required ShogiNoteService shogiNoteService}) : _shogiNoteService = shogiNoteService {
     _note = _shogiNoteService.getNote();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
-import 'package:shogi_note/presentation/controller/note_controller.dart';
 import 'package:shogi_note/presentation/widget/board_view.dart';
 
 class BlockView extends StatelessWidget {
@@ -9,13 +9,21 @@ class BlockView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<BlockController, NoteController>(builder: (_, blockController, noteController, __) {
+    return Consumer<BlockController>(builder: (_, blockController, __) {
       return Column(
         children: [
           Row(
             children: [
               Container(width: 20),
-              Column(children: [const BoardView(), _getBoardInterfaceView(blockController)]),
+              Column(children: () {
+                List<Widget> boardColumn = List.of([const BoardView()]);
+
+                if (blockController.blockMode == BlockMode.read) {
+                  boardColumn.add(_getBoardInterfaceView(blockController));
+                }
+
+                return boardColumn;
+              }()),
               Container(width: 40),
               SizedBox(
                 width: 400,
@@ -29,7 +37,7 @@ class BlockView extends StatelessWidget {
                       width: 400,
                       child: const Text('TBD')),
                   Container(height: 20),
-                  _getCommentView(blockController.block.comment)
+                  _getCommentView(blockController.block.comment, blockController.blockMode)
                 ]),
               )
             ],
@@ -70,7 +78,7 @@ class BlockView extends StatelessWidget {
     );
   }
 
-  Widget _getCommentView(String comment) {
+  Widget _getCommentView(String comment, BlockMode blockMode) {
     return Container(
         width: 400,
         height: 400,
@@ -79,7 +87,7 @@ class BlockView extends StatelessWidget {
         ),
         child: TextFormField(
           initialValue: comment,
-          readOnly: true,
+          readOnly: blockMode == BlockMode.read,
           keyboardType: TextInputType.multiline,
           maxLines: null,
           autofocus: true,

@@ -54,6 +54,7 @@ class ShogiNoteServiceImpl implements ShogiNoteService {
     return note;
   }
 
+  @override
   void setNote(Note note) {
     this.note = note;
   }

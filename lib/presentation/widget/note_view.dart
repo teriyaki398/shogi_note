@@ -35,13 +35,15 @@ class NotePageView extends StatelessWidget {
   }
 
   Widget _buildBlockView(NoteController noteController, int index) {
-    BlockController blockController = BlockController(block: noteController.note.blockList[index]);
-
-    return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (context) => blockController)],
-        child: Column(
-          children: [_getBlockInterfaceView(index), Container(height: 20), const BlockView()],
-        ));
+    return ChangeNotifierProxyProvider<NoteController, BlockController>(
+        create: (_) => BlockController(block: noteController.note.blockList[index]),
+        update: (_, noteController, blockController) => blockController!..update(noteController.note.blockList[index]),
+        child: Column(children: [
+          _getBlockInterfaceView(index),
+          Container(height: 20),
+          const BlockView(),
+          Container(height: 40)
+        ]));
   }
 
   Widget _getBlockInterfaceView(int index) {
@@ -63,6 +65,7 @@ class NotePageView extends StatelessWidget {
             return List.of([
               ElevatedButton.icon(
                 onPressed: () {
+                  noteController.onClickBlockSaveButton(blockController.block, index);
                   blockController.onClickSaveButton();
                 },
                 icon: const Icon(Icons.save),
