@@ -21,21 +21,17 @@ class BoardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BlockController>(
-      builder: (_, __, ___) {
-        return SizedBox(
-          width: cellWidth * colNum,
-          child: Column(
-            children: [
-              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
-              const SizedBox(height: 10),
-              SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
-              const SizedBox(height: 10),
-              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
-            ],
-          ),
-        );
-      },
+    return SizedBox(
+      width: cellWidth * colNum,
+      child: Column(
+        children: [
+          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
+          const SizedBox(height: 10),
+          SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
+          const SizedBox(height: 10),
+          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
+        ],
+      ),
     );
   }
 

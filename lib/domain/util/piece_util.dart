@@ -44,4 +44,8 @@ class PieceUtil {
   static bool isWhitePiece(Piece piece) {
     return _whitePiece.contains(piece);
   }
+
+  static bool isSameColor(Piece piece1, Piece piece2) {
+    return isBlackPiece(piece1) && isBlackPiece(piece2) || isWhitePiece(piece1) && isWhitePiece(piece2);
+  }
 }
