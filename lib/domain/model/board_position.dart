@@ -6,6 +6,8 @@ class BoardPosition extends Equatable {
 
   const BoardPosition({required this.row, required this.col});
 
+  const BoardPosition.of(this.row, this.col);
+
   @override
   List<Object?> get props => [row, col];
 }
