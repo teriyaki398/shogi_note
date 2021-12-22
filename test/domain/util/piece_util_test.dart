@@ -44,11 +44,4 @@ void main() {
       }
     }
   });
-
-  test('PieceUtil.isSameColor() error', () {
-    for (var piece in Piece.values) {
-      expect(() => PieceUtil.isSameColor(Piece.nil, piece), throwsA(const TypeMatcher<ArgumentError>()));
-      expect(() => PieceUtil.isSameColor(piece, Piece.nil), throwsA(const TypeMatcher<ArgumentError>()));
-    }
-  });
 }
