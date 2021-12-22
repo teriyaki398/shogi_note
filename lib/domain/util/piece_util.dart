@@ -3,7 +3,7 @@ import 'package:shogi_note/domain/const/piece.dart';
 class PieceUtil {
   PieceUtil._();
 
-  static const Set<Piece> _blackPiece = {
+  static const Set<Piece> _blackPieceSet = {
     Piece.bFu,
     Piece.bTo,
     Piece.bKy,
@@ -20,7 +20,7 @@ class PieceUtil {
     Piece.bOu
   };
 
-  static const Set<Piece> _whitePiece = {
+  static const Set<Piece> _whitePieceSet = {
     Piece.wFu,
     Piece.wTo,
     Piece.wKy,
@@ -37,12 +37,16 @@ class PieceUtil {
     Piece.wOu
   };
 
+  static Set<Piece> get blackPieceSet => _blackPieceSet;
+
+  static Set<Piece> get whitePieceSet => _whitePieceSet;
+
   static bool isBlackPiece(Piece piece) {
-    return _blackPiece.contains(piece);
+    return _blackPieceSet.contains(piece);
   }
 
   static bool isWhitePiece(Piece piece) {
-    return _whitePiece.contains(piece);
+    return _whitePieceSet.contains(piece);
   }
 
   static bool isSameColor(Piece piece1, Piece piece2) {
