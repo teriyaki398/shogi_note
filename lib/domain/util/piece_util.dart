@@ -46,6 +46,9 @@ class PieceUtil {
   }
 
   static bool isSameColor(Piece piece1, Piece piece2) {
+    if (piece1 == Piece.nil || piece2 == Piece.nil) {
+      throw ArgumentError("Piece.nil cannot be compared");
+    }
     return isBlackPiece(piece1) && isBlackPiece(piece2) || isWhitePiece(piece1) && isWhitePiece(piece2);
   }
 }
