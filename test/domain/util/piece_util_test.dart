@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/util/piece_util.dart';
 
-Future main() async {
+void main() {
   test('PieceUtil all piece is covered', () {
     Set<Piece> allPieceSet = {Piece.nil}
       ..addAll(PieceUtil.blackPieceSet)
