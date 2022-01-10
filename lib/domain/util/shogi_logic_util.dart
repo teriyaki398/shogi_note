@@ -1,3 +1,4 @@
+import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
@@ -7,7 +8,7 @@ import 'package:shogi_note/domain/util/piece_util.dart';
 class ShogiLogicUtil {
   ShogiLogicUtil._();
 
-  // Return if move operation (from: src, to: dst) is acceptable based on give board state
+  // Return if move operation (from: src, to: dst) is acceptable for given board state.
   static bool isMoveActionAcceptable(BoardState boardState, PieceMoveAction action) {
     BoardPosition src = action.src;
     BoardPosition dst = action.dst;
@@ -31,23 +32,30 @@ class ShogiLogicUtil {
   }
 
   // Create Set of BoardPosition of which piece pointed by given pos can move.
+  // - Active color (手番) is considered. That means if active color is black, white piece cannot move anywhere.
+  // - "Check" or "Checkmate" are not considered.
   static Set<BoardPosition> getMovablePositionSet(BoardState boardState, BoardPosition pos) {
     int row = pos.row;
     int col = pos.col;
     Piece piece = boardState.getPiece(pos);
 
     if (piece == Piece.nil) {
-      return Set.of({});
+      return {};
+
+      // Piece color is not active color
+    } else if (PieceUtil.isBlackPiece(piece) && boardState.color == ActiveColor.white ||
+        PieceUtil.isWhitePiece(piece) && boardState.color == ActiveColor.black) {
+      return {};
 
       // Black Fu
     } else if (piece == Piece.bFu) {
       if (row - 1 < 0) {
-        return Set.of({});
+        return {};
       }
 
       Piece dstPiece = boardState.getPiece(BoardPosition.of(row - 1, col));
       if (PieceUtil.isBlackPiece(dstPiece)) {
-        return Set.of({});
+        return {};
       } else {
         return Set.of({BoardPosition.of(row - 1, col)});
       }
@@ -55,7 +63,7 @@ class ShogiLogicUtil {
       // Black Ky
     } else if (piece == Piece.bKy) {
       Set<BoardPosition> pieceSet = {};
-      for (int r = row - 1; r < 0; r--) {
+      for (int r = row - 1; r >= 0; r--) {
         Piece dstPiece = boardState.getPiece(BoardPosition.of(r, col));
 
         if (dstPiece == Piece.nil) {
@@ -63,7 +71,7 @@ class ShogiLogicUtil {
           continue;
         } else if (PieceUtil.isBlackPiece(dstPiece)) {
           break;
-        } else if (PieceUtil.isWhitePiece(piece)) {
+        } else if (PieceUtil.isWhitePiece(dstPiece)) {
           pieceSet.add(BoardPosition.of(r, col));
           break;
         }
@@ -93,11 +101,13 @@ class ShogiLogicUtil {
         BoardPosition.of(row + 1, col - 1),
         BoardPosition.of(row + 1, col + 1)
       };
+      // Remove positions which are out of bounds.
+      pieceSet.removeWhere((pos) => pos.row < 0 || pos.row > 8 || pos.col < 0 || pos.col > 8);
       pieceSet.removeWhere((pos) => PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition.of(pos.row, pos.col))));
       return pieceSet;
 
       // Black Ki, To, Nky, Nke, Ngi
-    } else if ({Piece.bKi, Piece.bTo, Piece.bNky, Piece.bNke, Piece.bNgi}.contains(piece)) {
+    } else if ({Piece.bKi, Piece.bTo, Piece.bNy, Piece.bNe, Piece.bNg}.contains(piece)) {
       Set<BoardPosition> pieceSet = {
         BoardPosition.of(row - 1, col - 1),
         BoardPosition.of(row - 1, col),
@@ -106,6 +116,8 @@ class ShogiLogicUtil {
         BoardPosition.of(row, col + 1),
         BoardPosition.of(row + 1, col)
       };
+      // Remove positions which are out of bounds.
+      pieceSet.removeWhere((pos) => pos.row < 0 || pos.row > 8 || pos.col < 0 || pos.col > 8);
       pieceSet.removeWhere((pos) => PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition.of(pos.row, pos.col))));
       return pieceSet;
 
@@ -136,20 +148,20 @@ class ShogiLogicUtil {
       // White Fu
     } else if (piece == Piece.wFu) {
       if (row + 1 > 8) {
-        return Set.of({});
+        return {};
       }
 
       Piece dstPiece = boardState.getPiece(BoardPosition.of(row + 1, col));
       if (PieceUtil.isWhitePiece(dstPiece)) {
-        return Set.of({});
+        return {};
       } else {
-        return Set.of({BoardPosition.of(row - 1, col)});
+        return Set.of({BoardPosition.of(row + 1, col)});
       }
 
       // White Ky
     } else if (piece == Piece.wKy) {
       Set<BoardPosition> pieceSet = {};
-      for (int r = row + 1; r > 8; r++) {
+      for (int r = row + 1; r <= 8; r++) {
         Piece dstPiece = boardState.getPiece(BoardPosition.of(r, col));
 
         if (dstPiece == Piece.nil) {
@@ -158,7 +170,7 @@ class ShogiLogicUtil {
         } else if (PieceUtil.isBlackPiece(dstPiece)) {
           pieceSet.add(BoardPosition.of(r, col));
           break;
-        } else if (PieceUtil.isWhitePiece(piece)) {
+        } else if (PieceUtil.isWhitePiece(dstPiece)) {
           break;
         }
       }
@@ -169,11 +181,11 @@ class ShogiLogicUtil {
       Set<BoardPosition> pieceSet = {};
       if (row + 2 < 9) {
         if (col - 1 > 0 && !PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition.of(row + 2, col - 1)))) {
-          pieceSet.add(BoardPosition.of(row - 2, col - 1));
+          pieceSet.add(BoardPosition.of(row + 2, col - 1));
         }
 
         if (col + 1 < 9 && !PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition.of(row + 2, col + 1)))) {
-          pieceSet.add(BoardPosition.of(row - 2, col + 1));
+          pieceSet.add(BoardPosition.of(row + 2, col + 1));
         }
       }
       return pieceSet;
@@ -187,11 +199,13 @@ class ShogiLogicUtil {
         BoardPosition.of(row + 1, col),
         BoardPosition.of(row + 1, col + 1)
       };
+      // Remove positions which are out of bounds.
+      pieceSet.removeWhere((pos) => pos.row < 0 || pos.row > 8 || pos.col < 0 || pos.col > 8);
       pieceSet.removeWhere((pos) => PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition.of(pos.row, pos.col))));
       return pieceSet;
 
       // White Ki, To, Nky, Nke, Ngi
-    } else if ({Piece.wKi, Piece.wTo, Piece.wNky, Piece.wNke, Piece.wNgi}.contains(piece)) {
+    } else if ({Piece.wKi, Piece.wTo, Piece.wNy, Piece.wNe, Piece.wNg}.contains(piece)) {
       Set<BoardPosition> pieceSet = {
         BoardPosition.of(row - 1, col),
         BoardPosition.of(row, col - 1),
@@ -200,6 +214,8 @@ class ShogiLogicUtil {
         BoardPosition.of(row + 1, col),
         BoardPosition.of(row + 1, col + 1)
       };
+      // Remove positions which are out of bounds.
+      pieceSet.removeWhere((pos) => pos.row < 0 || pos.row > 8 || pos.col < 0 || pos.col > 8);
       pieceSet.removeWhere((pos) => PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition.of(pos.row, pos.col))));
       return pieceSet;
 
@@ -228,7 +244,7 @@ class ShogiLogicUtil {
       return _getOuMovablePosition(boardState, pos);
     }
 
-    return Set.of({});
+    return {};
   }
 
   // Create movable position set dedicated to Piece.bKa or Piece.wKa
