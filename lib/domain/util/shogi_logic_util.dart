@@ -255,7 +255,7 @@ class ShogiLogicUtil {
     Set<BoardPosition> pieceSet = {};
 
     // ↖↖↖↖
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row - i < 0 || col - i < 0) {
         break;
       }
@@ -274,7 +274,7 @@ class ShogiLogicUtil {
     }
 
     // ↗↗↗↗
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row - i < 0 || col + i > 8) {
         break;
       }
@@ -293,7 +293,7 @@ class ShogiLogicUtil {
     }
 
     // ↘↘↘↘
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row + i > 8 || col + i > 8) {
         break;
       }
@@ -312,7 +312,7 @@ class ShogiLogicUtil {
     }
 
     // ↙↙↙↙
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row + i > 8 || col - i < 0) {
         break;
       }
@@ -341,7 +341,7 @@ class ShogiLogicUtil {
     Set<BoardPosition> pieceSet = {};
 
     // ←←←←
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (col - i < 0) {
         break;
       }
@@ -361,7 +361,7 @@ class ShogiLogicUtil {
     }
 
     // ↑↑↑↑
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row - i < 0) {
         break;
       }
@@ -381,7 +381,7 @@ class ShogiLogicUtil {
     }
 
     // →→→→
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (col + i > 8) {
         break;
       }
@@ -401,7 +401,7 @@ class ShogiLogicUtil {
     }
 
     // ↓↓↓↓
-    for (int i = 0; i < 9; i++) {
+    for (int i = 1; i < 9; i++) {
       if (row + i > 8) {
         break;
       }
