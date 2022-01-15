@@ -32,102 +32,100 @@ void main() {
 
   test('Black Ki/To/Ny/Ne/Ng getMovablePositionSet', () {
     for (Piece p in {Piece.bKi, Piece.bTo, Piece.bNy, Piece.bNe, Piece.bNg}) {
-      BoardState bsBlackDstNil =
-          _generateBoardState({Tuple2(p, const BoardPosition(row: 4, col: 4))}, ActiveColor.black);
+      BoardState bsBlackDstNil = _generateBoardState({Tuple2(p, BoardPosition(4, 4))}, ActiveColor.black);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstNil, const BoardPosition(row: 4, col: 4)), {
-        const BoardPosition(row: 3, col: 3),
-        const BoardPosition(row: 3, col: 4),
-        const BoardPosition(row: 3, col: 5),
-        const BoardPosition(row: 4, col: 3),
-        const BoardPosition(row: 4, col: 5),
-        const BoardPosition(row: 5, col: 4),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstNil, BoardPosition(4, 4)), {
+        BoardPosition(3, 3),
+        BoardPosition(3, 4),
+        BoardPosition(3, 5),
+        BoardPosition(4, 3),
+        BoardPosition(4, 5),
+        BoardPosition(5, 4),
       });
 
       BoardState bsBlackDstPiece = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 4, col: 4)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 3, col: 3)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 3, col: 4)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 3, col: 5)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 4, col: 3)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 4, col: 5)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 5, col: 4)),
+        Tuple2(p, BoardPosition(4, 4)),
+        Tuple2(Piece.bFu, BoardPosition(3, 3)),
+        Tuple2(Piece.wFu, BoardPosition(3, 4)),
+        Tuple2(Piece.bFu, BoardPosition(3, 5)),
+        Tuple2(Piece.wFu, BoardPosition(4, 3)),
+        Tuple2(Piece.bFu, BoardPosition(4, 5)),
+        Tuple2(Piece.wFu, BoardPosition(5, 4)),
       }, ActiveColor.black);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstPiece, const BoardPosition(row: 4, col: 4)), {
-        const BoardPosition(row: 3, col: 4),
-        const BoardPosition(row: 4, col: 3),
-        const BoardPosition(row: 5, col: 4),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstPiece, BoardPosition(4, 4)), {
+        BoardPosition(3, 4),
+        BoardPosition(4, 3),
+        BoardPosition(5, 4),
       });
 
       BoardState bsBlackOutOfBounds = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 0, col: 8)),
+        Tuple2(p, BoardPosition(0, 8)),
       }, ActiveColor.black);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds, const BoardPosition(row: 0, col: 8)), {
-        const BoardPosition(row: 0, col: 7),
-        const BoardPosition(row: 1, col: 8),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds, BoardPosition(0, 8)), {
+        BoardPosition(0, 7),
+        BoardPosition(1, 8),
       });
 
       BoardState bsBlackOutOfBounds2 = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 8, col: 0)),
+        Tuple2(p, BoardPosition(8, 0)),
       }, ActiveColor.black);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds2, const BoardPosition(row: 8, col: 0)), {
-        const BoardPosition(row: 7, col: 0),
-        const BoardPosition(row: 7, col: 1),
-        const BoardPosition(row: 8, col: 1),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds2, BoardPosition(8, 0)), {
+        BoardPosition(7, 0),
+        BoardPosition(7, 1),
+        BoardPosition(8, 1),
       });
     }
   });
 
   test('White Ki/To/Ny/Ne/Ng getMovablePositionSet', () {
     for (Piece p in {Piece.wKi, Piece.wTo, Piece.wNy, Piece.wNe, Piece.wNg}) {
-      BoardState bsWhiteDstNil =
-          _generateBoardState({Tuple2(p, const BoardPosition(row: 4, col: 4))}, ActiveColor.white);
+      BoardState bsWhiteDstNil = _generateBoardState({Tuple2(p, BoardPosition(4, 4))}, ActiveColor.white);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstNil, const BoardPosition(row: 4, col: 4)), {
-        const BoardPosition(row: 3, col: 4),
-        const BoardPosition(row: 4, col: 3),
-        const BoardPosition(row: 4, col: 5),
-        const BoardPosition(row: 5, col: 3),
-        const BoardPosition(row: 5, col: 4),
-        const BoardPosition(row: 5, col: 5),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstNil, BoardPosition(4, 4)), {
+        BoardPosition(3, 4),
+        BoardPosition(4, 3),
+        BoardPosition(4, 5),
+        BoardPosition(5, 3),
+        BoardPosition(5, 4),
+        BoardPosition(5, 5),
       });
 
       BoardState bsWhiteDstPiece = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 4, col: 4)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 3, col: 4)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 4, col: 3)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 4, col: 5)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 5, col: 3)),
-        const Tuple2(Piece.bFu, BoardPosition(row: 5, col: 4)),
-        const Tuple2(Piece.wFu, BoardPosition(row: 5, col: 5)),
+        Tuple2(p, BoardPosition(4, 4)),
+        Tuple2(Piece.bFu, BoardPosition(3, 4)),
+        Tuple2(Piece.wFu, BoardPosition(4, 3)),
+        Tuple2(Piece.bFu, BoardPosition(4, 5)),
+        Tuple2(Piece.wFu, BoardPosition(5, 3)),
+        Tuple2(Piece.bFu, BoardPosition(5, 4)),
+        Tuple2(Piece.wFu, BoardPosition(5, 5)),
       }, ActiveColor.white);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstPiece, const BoardPosition(row: 4, col: 4)), {
-        const BoardPosition(row: 3, col: 4),
-        const BoardPosition(row: 4, col: 5),
-        const BoardPosition(row: 5, col: 4),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstPiece, BoardPosition(4, 4)), {
+        BoardPosition(3, 4),
+        BoardPosition(4, 5),
+        BoardPosition(5, 4),
       });
 
       BoardState bsWhiteOutOfBounds = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 0, col: 8)),
+        Tuple2(p, BoardPosition(0, 8)),
       }, ActiveColor.white);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds, const BoardPosition(row: 0, col: 8)), {
-        const BoardPosition(row: 0, col: 7),
-        const BoardPosition(row: 1, col: 7),
-        const BoardPosition(row: 1, col: 8),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds, BoardPosition(0, 8)), {
+        BoardPosition(0, 7),
+        BoardPosition(1, 7),
+        BoardPosition(1, 8),
       });
 
       BoardState bsWhiteOutOfBounds2 = _generateBoardState({
-        Tuple2(p, const BoardPosition(row: 8, col: 0)),
+        Tuple2(p, BoardPosition(8, 0)),
       }, ActiveColor.white);
 
-      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds2, const BoardPosition(row: 8, col: 0)), {
-        const BoardPosition(row: 7, col: 0),
-        const BoardPosition(row: 8, col: 1),
+      expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds2, BoardPosition(8, 0)), {
+        BoardPosition(7, 0),
+        BoardPosition(8, 1),
       });
     }
   });

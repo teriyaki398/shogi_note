@@ -20,15 +20,15 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstNil, const BoardPosition(row: 8, col: 4)), {
-      const BoardPosition(row: 7, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 1, col: 4),
-      const BoardPosition(row: 0, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstNil, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
+      BoardPosition(0, 4),
     });
 
     BoardState bsBlackDstWhite = BoardState(pieceOnBoard: const [
@@ -43,15 +43,15 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstWhite, const BoardPosition(row: 8, col: 4)), {
-      const BoardPosition(row: 7, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 1, col: 4),
-      const BoardPosition(row: 0, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstWhite, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
+      BoardPosition(0, 4),
     });
 
     BoardState bsBlackDstBlack = BoardState(pieceOnBoard: const [
@@ -66,14 +66,14 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstBlack, const BoardPosition(row: 8, col: 4)), {
-      const BoardPosition(row: 7, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 1, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstBlack, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
     });
 
     BoardState bsBlackOutOfBounds = BoardState(pieceOnBoard: const [
@@ -88,8 +88,7 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds, const BoardPosition(row: 0, col: 4)),
-        <BoardPosition>{});
+    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds, BoardPosition(0, 4)), <BoardPosition>{});
 
     // White piece test
     BoardState bsWhiteDstNil = BoardState(pieceOnBoard: const [
@@ -104,15 +103,15 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstNil, const BoardPosition(row: 0, col: 4)), {
-      const BoardPosition(row: 1, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 7, col: 4),
-      const BoardPosition(row: 8, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstNil, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
+      BoardPosition(8, 4),
     });
 
     BoardState bsWhiteDstBlack = BoardState(pieceOnBoard: const [
@@ -127,15 +126,15 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstBlack, const BoardPosition(row: 0, col: 4)), {
-      const BoardPosition(row: 1, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 7, col: 4),
-      const BoardPosition(row: 8, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstBlack, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
+      BoardPosition(8, 4),
     });
 
     BoardState bsWhiteDstWhite = BoardState(pieceOnBoard: const [
@@ -150,14 +149,14 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wGi, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstWhite, const BoardPosition(row: 0, col: 4)), {
-      const BoardPosition(row: 1, col: 4),
-      const BoardPosition(row: 2, col: 4),
-      const BoardPosition(row: 3, col: 4),
-      const BoardPosition(row: 4, col: 4),
-      const BoardPosition(row: 5, col: 4),
-      const BoardPosition(row: 6, col: 4),
-      const BoardPosition(row: 7, col: 4),
+    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstWhite, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
     });
 
     BoardState bsWhiteOutOfBounds = BoardState(pieceOnBoard: const [
@@ -172,7 +171,6 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds, const BoardPosition(row: 8, col: 4)),
-        <BoardPosition>{});
+    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds, BoardPosition(8, 4)), <BoardPosition>{});
   });
 }

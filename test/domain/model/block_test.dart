@@ -26,4 +26,17 @@ Future main() async {
     expect(src == src2, isFalse);
     expect(src == src3, isTrue);
   });
+
+  test('getter test', () {
+    Block src = Block(
+        blockId: "cf84afbe-9b06-495e-9887-9bf7e6114406",
+        boardStateList: [
+          SfenStringUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1")
+        ],
+        comment: "test comment");
+
+    expect(src.lastIndex, 0);
+    expect(src.lastBoardState,
+        SfenStringUtil.buildBoardState("lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"));
+  });
 }
