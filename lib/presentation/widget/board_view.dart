@@ -44,7 +44,7 @@ class BoardView extends StatelessWidget {
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: rowNum),
             itemBuilder: (context, index) {
-              BoardPosition pos = BoardPosition(row: (index / rowNum).floor(), col: index % colNum);
+              BoardPosition pos = BoardPosition((index / rowNum).floor(), index % colNum);
               Piece piece = boardState.pieceOnBoard[pos.row][pos.col];
 
               return _getBoardCellView(piece, pos);
