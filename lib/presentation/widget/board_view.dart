@@ -21,21 +21,17 @@ class BoardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BlockController>(
-      builder: (_, __, ___) {
-        return SizedBox(
-          width: cellWidth * colNum,
-          child: Column(
-            children: [
-              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
-              const SizedBox(height: 10),
-              SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
-              const SizedBox(height: 10),
-              SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
-            ],
-          ),
-        );
-      },
+    return SizedBox(
+      width: cellWidth * colNum,
+      child: Column(
+        children: [
+          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
+          const SizedBox(height: 10),
+          SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
+          const SizedBox(height: 10),
+          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
+        ],
+      ),
     );
   }
 
@@ -48,7 +44,7 @@ class BoardView extends StatelessWidget {
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: rowNum),
             itemBuilder: (context, index) {
-              BoardPosition pos = BoardPosition(row: (index / rowNum).floor(), col: index % colNum);
+              BoardPosition pos = BoardPosition((index / rowNum).floor(), index % colNum);
               Piece piece = boardState.pieceOnBoard[pos.row][pos.col];
 
               return _getBoardCellView(piece, pos);

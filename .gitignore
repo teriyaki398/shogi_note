@@ -33,6 +33,7 @@ coverage/
 .pub-cache/
 .pub/
 /build/
+/coverage
 
 # Web related
 lib/generated_plugin_registrant.dart
