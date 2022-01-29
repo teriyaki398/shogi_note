@@ -40,7 +40,7 @@ class BoardStateBuilder {
   }
 
   // Create new BoardState object by given boardState and move input data
-  // TODO: Implementation is not completed
+  // TODO: Implementation is not completed (need to consider promotion)
   void movePiece(PieceMoveAction action) {
     List<List<Piece>> pieceOnBoard = range(_boardState.pieceOnBoard.length).map((i) {
       return range(_boardState.pieceOnBoard[i as int].length).map((j) {
@@ -51,7 +51,7 @@ class BoardStateBuilder {
     pieceOnBoard[action.dst.row][action.dst.col] = pieceOnBoard[action.src.row][action.src.col];
     pieceOnBoard[action.src.row][action.src.col] = Piece.nil;
 
-    ActiveColor switchedColor = _boardState.color == ActiveColor.black ? ActiveColor.white : ActiveColor.white;
+    ActiveColor switchedColor = _boardState.color == ActiveColor.black ? ActiveColor.white : ActiveColor.black;
     _boardState = BoardState(
         pieceOnBoard: pieceOnBoard, bHolder: _boardState.bHolder, wHolder: _boardState.wHolder, color: switchedColor);
   }

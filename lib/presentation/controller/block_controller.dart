@@ -54,14 +54,16 @@ class BlockController with ChangeNotifier {
       return;
     }
 
-    // Consume heldPos and apply move action
+    // Consume holdingPos and apply move action
     PieceMoveAction action = PieceMoveAction(src: _holdingPos!, dst: pos);
+
     if (ShogiLogicUtil.isMoveActionAcceptable(currentBoardState, action)) {
       BoardStateBuilder newBoardState = BoardStateBuilder.ofState(currentBoardState)..movePiece(action);
       BlockBuilder block = BlockBuilder.ofBlock(_block)..addBoardState(newBoardState.build());
       _block = block.build();
       _displayBoardStateIndex += 1;
     }
+
     _holdingPos = null;
     notifyListeners();
   }
