@@ -10,6 +10,6 @@ void main() {
   test('BlockController test', () {
     BoardState boardState = BoardStateBuilder.ofDefault().build();
     Block block = Block(blockId: const Uuid().v4(), boardStateList: [boardState], comment: "test");
-    BlockController blockController = BlockController(block: block);
+    BlockController(block: block);
   });
 }
