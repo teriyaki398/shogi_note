@@ -1,3 +1,6 @@
+pubspec.lock
+coverage/
+
 # Miscellaneous
 *.class
 *.log

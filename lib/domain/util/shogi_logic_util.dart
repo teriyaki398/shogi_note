@@ -10,25 +10,8 @@ class ShogiLogicUtil {
 
   // Return if move operation (from: src, to: dst) is acceptable for given board state.
   static bool isMoveActionAcceptable(BoardState boardState, PieceMoveAction action) {
-    BoardPosition src = action.src;
-    BoardPosition dst = action.dst;
-
-    Piece srcPiece = boardState.pieceOnBoard[src.row][src.col];
-    Piece dstPiece = boardState.pieceOnBoard[dst.row][dst.col];
-
-    // Piece can't move over own piece.
-    if (PieceUtil.isSameColor(srcPiece, dstPiece)) return false;
-
-    switch (srcPiece) {
-      case Piece.nil:
-        return false;
-      case Piece.bFu:
-        return src.col == dst.col && src.row == dst.row + 1;
-      case Piece.wFu:
-        return src.col == dst.col && src.row == dst.row - 1;
-      default:
-        return false;
-    }
+    Set<BoardPosition> movablePositionSet = getMovablePositionSet(boardState, action.src);
+    return movablePositionSet.contains(action.dst);
   }
 
   // Create Set of BoardPosition of which piece pointed by given pos can move.
