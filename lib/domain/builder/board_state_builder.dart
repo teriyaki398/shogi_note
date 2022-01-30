@@ -1,6 +1,7 @@
 import 'package:quiver/iterables.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/piece_promotion_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/piece_move_action.dart';
 
@@ -40,7 +41,6 @@ class BoardStateBuilder {
   }
 
   // Create new BoardState object by given boardState and move input data
-  // TODO: Implementation is not completed (need to consider promotion)
   void movePiece(PieceMoveAction action) {
     List<List<Piece>> pieceOnBoard = range(_boardState.pieceOnBoard.length).map((i) {
       return range(_boardState.pieceOnBoard[i as int].length).map((j) {
@@ -48,11 +48,21 @@ class BoardStateBuilder {
       }).toList();
     }).toList();
 
-    pieceOnBoard[action.dst.row][action.dst.col] = pieceOnBoard[action.src.row][action.src.col];
+    // Activate promotion
+    Piece srcPiece = pieceOnBoard[action.src.row][action.src.col];
+    if (action.promote) {
+      srcPiece = PiecePromotionMaps.doPromote(srcPiece);
+    }
+
+    pieceOnBoard[action.dst.row][action.dst.col] = srcPiece;
     pieceOnBoard[action.src.row][action.src.col] = Piece.nil;
 
     ActiveColor switchedColor = _boardState.color == ActiveColor.black ? ActiveColor.white : ActiveColor.black;
     _boardState = BoardState(
-        pieceOnBoard: pieceOnBoard, bHolder: _boardState.bHolder, wHolder: _boardState.wHolder, color: switchedColor);
+      pieceOnBoard: pieceOnBoard,
+      bHolder: _boardState.bHolder,
+      wHolder: _boardState.wHolder,
+      color: switchedColor,
+    );
   }
 }
