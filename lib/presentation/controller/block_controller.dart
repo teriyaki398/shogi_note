@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:shogi_note/domain/builder/block_builder.dart';
 import 'package:shogi_note/domain/builder/board_state_builder.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/logic/shogi_logic.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/piece_move_action.dart';
-import 'package:shogi_note/domain/util/shogi_logic_util.dart';
 import 'package:shogi_note/presentation/const/block_mode.dart';
 
 class BlockController with ChangeNotifier {
@@ -57,7 +57,7 @@ class BlockController with ChangeNotifier {
     // Consume holdingPos and apply move action
     PieceMoveAction action = PieceMoveAction(src: _holdingPos!, dst: pos);
 
-    if (ShogiLogicUtil.isMoveActionAcceptable(currentBoardState, action)) {
+    if (ShogiLogic.isMoveActionAcceptable(currentBoardState, action)) {
       BoardStateBuilder newBoardState = BoardStateBuilder.ofState(currentBoardState)..movePiece(action);
       BlockBuilder block = BlockBuilder.ofBlock(_block)..addBoardState(newBoardState.build());
       _block = block.build();

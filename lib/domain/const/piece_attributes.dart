@@ -1,7 +1,7 @@
 import 'package:shogi_note/domain/const/piece.dart';
 
-class PieceUtil {
-  PieceUtil._();
+class PieceAttributes {
+  PieceAttributes._();
 
   static const Set<Piece> _blackPieceSet = {
     Piece.bFu,

@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:quiver/iterables.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/piece_attributes.dart';
 import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/domain/util/piece_util.dart';
 import 'package:shogi_note/presentation/const/block_mode.dart';
 import 'package:shogi_note/presentation/controller/block_controller.dart';
 import 'package:tuple/tuple.dart';
@@ -74,7 +74,7 @@ class BoardView extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.all(10), // TODO: Consider ratio of parent widget size
                   child: RotatedBox(
-                    quarterTurns: PieceUtil.isBlackPiece(piece) ? 0 : 2, // Flip cell for white piece
+                    quarterTurns: PieceAttributes.isBlackPiece(piece) ? 0 : 2, // Flip cell for white piece
                     child: FittedBox(fit: BoxFit.fitWidth, child: Text(pieceDisplayChr)),
                   ))));
     });

@@ -1,9 +1,9 @@
 import 'package:quiver/iterables.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/piece_attributes.dart';
 import 'package:shogi_note/domain/const/piece_variant_maps.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/domain/util/piece_util.dart';
 import 'package:shogi_note/util/string_util.dart';
 import 'package:tuple/tuple.dart';
 
@@ -96,13 +96,13 @@ class SfenStringUtil {
       if (i > 0 && StringUtil.isDigit(sfenHolder[i - 1])) {
         int count = int.tryParse(sfenHolder[i - 1])!;
         Piece p = PieceVariantMaps.sfenChrToPiece(sfenHolder[i]);
-        PieceUtil.isBlackPiece(p) ? bPieceList.add(Tuple2(p, count)) : wPieceList.add(Tuple2(p, count));
+        PieceAttributes.isBlackPiece(p) ? bPieceList.add(Tuple2(p, count)) : wPieceList.add(Tuple2(p, count));
         continue;
       }
 
       // other -> normal case
       Piece p = PieceVariantMaps.sfenChrToPiece(sfenHolder[i]);
-      PieceUtil.isBlackPiece(p) ? bPieceList.add(Tuple2(p, 1)) : wPieceList.add(Tuple2(p, 1));
+      PieceAttributes.isBlackPiece(p) ? bPieceList.add(Tuple2(p, 1)) : wPieceList.add(Tuple2(p, 1));
     }
     return Tuple2<List<Tuple2<Piece, int>>, List<Tuple2<Piece, int>>>(bPieceList, wPieceList);
   }

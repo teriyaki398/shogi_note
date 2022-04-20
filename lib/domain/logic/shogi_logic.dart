@@ -1,12 +1,12 @@
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/piece_attributes.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/piece_move_action.dart';
-import 'package:shogi_note/domain/util/piece_util.dart';
 
-class ShogiLogicUtil {
-  ShogiLogicUtil._();
+class ShogiLogic {
+  ShogiLogic._();
 
   // Return if move operation (from: src, to: dst) is acceptable for given board state.
   static bool isMoveActionAcceptable(BoardState boardState, PieceMoveAction action) {
@@ -26,8 +26,8 @@ class ShogiLogicUtil {
       return {};
 
       // Piece color is not active color
-    } else if (PieceUtil.isBlackPiece(piece) && boardState.color == ActiveColor.white ||
-        PieceUtil.isWhitePiece(piece) && boardState.color == ActiveColor.black) {
+    } else if (PieceAttributes.isBlackPiece(piece) && boardState.color == ActiveColor.white ||
+        PieceAttributes.isWhitePiece(piece) && boardState.color == ActiveColor.black) {
       return {};
 
       // Black Fu
@@ -37,7 +37,7 @@ class ShogiLogicUtil {
       }
 
       Piece dstPiece = boardState.getPiece(BoardPosition(row - 1, col));
-      if (PieceUtil.isBlackPiece(dstPiece)) {
+      if (PieceAttributes.isBlackPiece(dstPiece)) {
         return {};
       } else {
         return Set.of({BoardPosition(row - 1, col)});
@@ -52,9 +52,9 @@ class ShogiLogicUtil {
         if (dstPiece == Piece.nil) {
           pieceSet.add(BoardPosition(r, col));
           continue;
-        } else if (PieceUtil.isBlackPiece(dstPiece)) {
+        } else if (PieceAttributes.isBlackPiece(dstPiece)) {
           break;
-        } else if (PieceUtil.isWhitePiece(dstPiece)) {
+        } else if (PieceAttributes.isWhitePiece(dstPiece)) {
           pieceSet.add(BoardPosition(r, col));
           break;
         }
@@ -65,11 +65,11 @@ class ShogiLogicUtil {
     } else if (piece == Piece.bKe) {
       Set<BoardPosition> pieceSet = {};
       if (row - 2 > 0) {
-        if (col - 1 > 0 && !PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition(row - 2, col - 1)))) {
+        if (col - 1 > 0 && !PieceAttributes.isBlackPiece(boardState.getPiece(BoardPosition(row - 2, col - 1)))) {
           pieceSet.add(BoardPosition(row - 2, col - 1));
         }
 
-        if (col + 1 < 9 && !PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition(row - 2, col + 1)))) {
+        if (col + 1 < 9 && !PieceAttributes.isBlackPiece(boardState.getPiece(BoardPosition(row - 2, col + 1)))) {
           pieceSet.add(BoardPosition(row - 2, col + 1));
         }
       }
@@ -87,7 +87,7 @@ class ShogiLogicUtil {
       possibleList.removeWhere((e) => !BoardPosition.isValidPosition(row: e[0], col: e[1]));
       Set<BoardPosition> pieceSet = possibleList.map((e) => BoardPosition(e[0], e[1])).toSet();
 
-      pieceSet.removeWhere((pos) => PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
+      pieceSet.removeWhere((pos) => PieceAttributes.isBlackPiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
       return pieceSet;
 
       // Black Ki, To, Nky, Nke, Ngi
@@ -103,7 +103,7 @@ class ShogiLogicUtil {
       possibleList.removeWhere((e) => !BoardPosition.isValidPosition(row: e[0], col: e[1]));
       Set<BoardPosition> pieceSet = possibleList.map((e) => BoardPosition(e[0], e[1])).toSet();
 
-      pieceSet.removeWhere((pos) => PieceUtil.isBlackPiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
+      pieceSet.removeWhere((pos) => PieceAttributes.isBlackPiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
       return pieceSet;
 
       // Black Ka
@@ -137,7 +137,7 @@ class ShogiLogicUtil {
       }
 
       Piece dstPiece = boardState.getPiece(BoardPosition(row + 1, col));
-      if (PieceUtil.isWhitePiece(dstPiece)) {
+      if (PieceAttributes.isWhitePiece(dstPiece)) {
         return {};
       } else {
         return Set.of({BoardPosition(row + 1, col)});
@@ -152,10 +152,10 @@ class ShogiLogicUtil {
         if (dstPiece == Piece.nil) {
           pieceSet.add(BoardPosition(r, col));
           continue;
-        } else if (PieceUtil.isBlackPiece(dstPiece)) {
+        } else if (PieceAttributes.isBlackPiece(dstPiece)) {
           pieceSet.add(BoardPosition(r, col));
           break;
-        } else if (PieceUtil.isWhitePiece(dstPiece)) {
+        } else if (PieceAttributes.isWhitePiece(dstPiece)) {
           break;
         }
       }
@@ -165,11 +165,11 @@ class ShogiLogicUtil {
     } else if (piece == Piece.wKe) {
       Set<BoardPosition> pieceSet = {};
       if (row + 2 < 9) {
-        if (col - 1 > 0 && !PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition(row + 2, col - 1)))) {
+        if (col - 1 > 0 && !PieceAttributes.isWhitePiece(boardState.getPiece(BoardPosition(row + 2, col - 1)))) {
           pieceSet.add(BoardPosition(row + 2, col - 1));
         }
 
-        if (col + 1 < 9 && !PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition(row + 2, col + 1)))) {
+        if (col + 1 < 9 && !PieceAttributes.isWhitePiece(boardState.getPiece(BoardPosition(row + 2, col + 1)))) {
           pieceSet.add(BoardPosition(row + 2, col + 1));
         }
       }
@@ -187,7 +187,7 @@ class ShogiLogicUtil {
       possibleList.removeWhere((e) => !BoardPosition.isValidPosition(row: e[0], col: e[1]));
       Set<BoardPosition> pieceSet = possibleList.map((e) => BoardPosition(e[0], e[1])).toSet();
 
-      pieceSet.removeWhere((pos) => PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
+      pieceSet.removeWhere((pos) => PieceAttributes.isWhitePiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
       return pieceSet;
 
       // White Ki, To, Nky, Nke, Ngi
@@ -203,7 +203,7 @@ class ShogiLogicUtil {
       possibleList.removeWhere((e) => !BoardPosition.isValidPosition(row: e[0], col: e[1]));
       Set<BoardPosition> pieceSet = possibleList.map((e) => BoardPosition(e[0], e[1])).toSet();
 
-      pieceSet.removeWhere((pos) => PieceUtil.isWhitePiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
+      pieceSet.removeWhere((pos) => PieceAttributes.isWhitePiece(boardState.getPiece(BoardPosition(pos.row, pos.col))));
       return pieceSet;
 
       // White Ka
@@ -251,7 +251,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -270,7 +270,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -289,7 +289,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -308,7 +308,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -338,7 +338,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -358,7 +358,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -378,7 +378,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -398,7 +398,7 @@ class ShogiLogicUtil {
       if (dstPiece == Piece.nil) {
         pieceSet.add(dstPos);
       } else {
-        if (PieceUtil.isSameColor(boardState.getPiece(pos), dstPiece)) {
+        if (PieceAttributes.isSameColor(boardState.getPiece(pos), dstPiece)) {
           break;
         } else {
           pieceSet.add(dstPos);
@@ -427,7 +427,7 @@ class ShogiLogicUtil {
     possibleList.removeWhere((e) => !BoardPosition.isValidPosition(row: e[0], col: e[1]));
     Set<BoardPosition> pieceSet = possibleList.map((e) => BoardPosition(e[0], e[1])).toSet();
 
-    pieceSet.removeWhere((p) => PieceUtil.isSameColor(boardState.getPiece(pos), boardState.getPiece(p)));
+    pieceSet.removeWhere((p) => PieceAttributes.isSameColor(boardState.getPiece(pos), boardState.getPiece(p)));
     return pieceSet;
   }
 }
