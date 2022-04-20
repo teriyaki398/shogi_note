@@ -37,6 +37,21 @@ class PieceAttributes {
     Piece.wOu
   };
 
+  static const Set<Piece> _promotablePiece = {
+    Piece.bFu,
+    Piece.bKy,
+    Piece.bKe,
+    Piece.bGi,
+    Piece.bKa,
+    Piece.bHi,
+    Piece.wFu,
+    Piece.wKy,
+    Piece.wKe,
+    Piece.wGi,
+    Piece.wKa,
+    Piece.wHi,
+  };
+
   static Set<Piece> get blackPieceSet => _blackPieceSet;
 
   static Set<Piece> get whitePieceSet => _whitePieceSet;
@@ -47,6 +62,10 @@ class PieceAttributes {
 
   static bool isWhitePiece(Piece piece) {
     return _whitePieceSet.contains(piece);
+  }
+
+  static bool isPromotablePiece(Piece piece) {
+    return _promotablePiece.contains(piece);
   }
 
   static bool isSameColor(Piece piece1, Piece piece2) {

@@ -25,17 +25,17 @@ class BoardView extends StatelessWidget {
       width: cellWidth * colNum,
       child: Column(
         children: [
-          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.white)),
+          SizedBox(height: cellHeight, child: _buildHolderView(ActiveColor.white)),
           const SizedBox(height: 10),
-          SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView()),
+          SizedBox(height: cellHeight * rowNum, width: cellWidth * colNum, child: _getBoardView(context)),
           const SizedBox(height: 10),
-          SizedBox(height: cellHeight, child: _getHolderView(ActiveColor.black))
+          SizedBox(height: cellHeight, child: _buildHolderView(ActiveColor.black))
         ],
       ),
     );
   }
 
-  Widget _getBoardView() {
+  Widget _getBoardView(BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
       BoardState boardState = blockController.currentBoardState;
 
@@ -47,7 +47,7 @@ class BoardView extends StatelessWidget {
               BoardPosition pos = BoardPosition((index / rowNum).floor(), index % colNum);
               Piece piece = boardState.pieceOnBoard[pos.row][pos.col];
 
-              return _getBoardCellView(piece, pos);
+              return _buildBoardCellView(piece, pos, context);
             },
             itemCount: rowNum * colNum,
             shrinkWrap: true,
@@ -55,16 +55,14 @@ class BoardView extends StatelessWidget {
     });
   }
 
-  Widget _getBoardCellView(Piece piece, BoardPosition pos) {
+  Widget _buildBoardCellView(Piece piece, BoardPosition pos, BuildContext context) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
       String pieceDisplayChr = PieceVariantMaps.pieceToDisplayChr(piece) ?? '';
       Color cellColor = blockController.isClickedCell(pos) ? Colors.amberAccent : Colors.white;
 
       return GestureDetector(
           onTap: () {
-            if (blockController.blockMode == BlockMode.edit) {
-              blockController.onClickBoardCell(pos);
-            }
+            _onTapBoardCell(pos, blockController, context);
           },
           child: Container(
               decoration: BoxDecoration(
@@ -80,7 +78,15 @@ class BoardView extends StatelessWidget {
     });
   }
 
-  Widget _getHolderView(ActiveColor color) {
+  Future<void> _onTapBoardCell(BoardPosition pos, BlockController blockController, BuildContext context) async {
+    if (blockController.blockMode != BlockMode.edit) {
+      return;
+    }
+
+    blockController.onClickBoardCell(pos, context);
+  }
+
+  Widget _buildHolderView(ActiveColor color) {
     return Consumer<BlockController>(builder: (_, blockController, __) {
       BoardState boardState = blockController.currentBoardState;
 
@@ -90,7 +96,7 @@ class BoardView extends StatelessWidget {
       for (var i in range(holderSize)) {
         i as int;
         Tuple2<Piece, int> pieceWithCount = color == ActiveColor.black ? boardState.bHolder[i] : boardState.wHolder[i];
-        children.add(_getHolderCellView(pieceWithCount));
+        children.add(_buildHolderCellView(pieceWithCount));
 
         // Add right side margin
         children.add(Container(width: 10));
@@ -102,7 +108,7 @@ class BoardView extends StatelessWidget {
     });
   }
 
-  Widget _getHolderCellView(Tuple2<Piece, int> pieceWithCount) {
+  Widget _buildHolderCellView(Tuple2<Piece, int> pieceWithCount) {
     String pieceDisplayChr = PieceVariantMaps.pieceToDisplayChr(pieceWithCount.item1) ?? '';
     String countChr = pieceWithCount.item2 > 1 ? pieceWithCount.item2.toString() : '';
 

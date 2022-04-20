@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shogi_note/domain/builder/block_builder.dart';
 import 'package:shogi_note/domain/builder/board_state_builder.dart';
-import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/const/active_color.dart';
+import 'package:shogi_note/domain/const/piece_attributes.dart';
 import 'package:shogi_note/domain/logic/shogi_logic.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
@@ -31,7 +32,10 @@ class BlockController with ChangeNotifier {
   }
 
   // TODO: Implementation is not completed
-  void onClickBoardCell(BoardPosition pos) {
+  /// Logic for handling user input by clicking board cell.
+  ///
+  /// BuildContext is used for launching Dialog.
+  Future<void> onClickBoardCell(BoardPosition pos, BuildContext context) async {
     // TODO: Consider user can input move action with overwriting
     if (_displayBoardStateIndex != _block.lastIndex) {
       return;
@@ -39,11 +43,14 @@ class BlockController with ChangeNotifier {
 
     // Initial holding operation
     if (_holdingPos == null) {
-      if (currentBoardState.getPiece(pos) == Piece.nil) {
-        return;
+      bool isHoldablePiece = currentBoardState.color == ActiveColor.black
+          ? PieceAttributes.isBlackPiece(currentBoardState.getPiece(pos))
+          : PieceAttributes.isWhitePiece(currentBoardState.getPiece(pos));
+
+      if (isHoldablePiece) {
+        _holdingPos = pos;
+        notifyListeners();
       }
-      _holdingPos = pos;
-      notifyListeners();
       return;
     }
 
@@ -54,18 +61,45 @@ class BlockController with ChangeNotifier {
       return;
     }
 
-    // Consume holdingPos and apply move action
+    // Consume holdingPos and apply move action if possible
     PieceMoveAction action = PieceMoveAction(src: _holdingPos!, dst: pos);
 
-    if (ShogiLogic.isMoveActionAcceptable(currentBoardState, action)) {
-      BoardStateBuilder newBoardState = BoardStateBuilder.ofState(currentBoardState)..movePiece(action);
-      BlockBuilder block = BlockBuilder.ofBlock(_block)..addBoardState(newBoardState.build());
-      _block = block.build();
-      _displayBoardStateIndex += 1;
-    }
+    if (ShogiLogic.isAcceptableMoveAction(currentBoardState, action)) {
+      if (ShogiLogic.isPromotableAction(currentBoardState.getPiece(action.src), action)) {
+        bool doPromote = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return SimpleDialog(
+                    title: const Text("成りますか？"),
+                    children: <Widget>[
+                      SimpleDialogOption(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: const Text('成る'),
+                      ),
+                      SimpleDialogOption(
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                        child: const Text('成らない'),
+                      )
+                    ],
+                  );
+                }) ??
+            false;
 
-    _holdingPos = null;
-    notifyListeners();
+        // TODO: Implement forcible promotion.
+        action = PieceMoveAction(src: action.src, dst: action.dst, promote: doPromote);
+      }
+
+      BoardState newBoardState = (BoardStateBuilder.ofState(currentBoardState)..movePiece(action)).build();
+      _block = (BlockBuilder.ofBlock(_block)..addBoardState(newBoardState)).build();
+      _displayBoardStateIndex += 1;
+
+      _holdingPos = null;
+      notifyListeners();
+    }
   }
 
   void onClickEditButton() {

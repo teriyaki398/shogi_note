@@ -9,9 +9,25 @@ class ShogiLogic {
   ShogiLogic._();
 
   // Return if move operation (from: src, to: dst) is acceptable for given board state.
-  static bool isMoveActionAcceptable(BoardState boardState, PieceMoveAction action) {
+  static bool isAcceptableMoveAction(BoardState boardState, PieceMoveAction action) {
     Set<BoardPosition> movablePositionSet = getMovablePositionSet(boardState, action.src);
     return movablePositionSet.contains(action.dst);
+  }
+
+  // Return if target piece can be promoted by action
+  static bool isPromotableAction(Piece piece, PieceMoveAction action) {
+    // Only pre-promoted piece can be promoted
+    if (piece == Piece.nil || !PieceAttributes.isPromotablePiece(piece)) {
+      return false;
+    }
+
+    // If piece color is black, the promotable action is to move from white area or to move to white area
+    // And if piece color is white, the condition must be opposite.
+    if (PieceAttributes.isBlackPiece(piece)) {
+      return (action.src.row >= 0 && action.src.row <= 2) || (action.dst.row >= 0 && action.dst.row <= 2);
+    } else {
+      return (action.src.row >= 6 && action.src.row <= 8) || (action.dst.row >= 6 && action.dst.row <= 8);
+    }
   }
 
   // Create Set of BoardPosition of which piece pointed by given pos can move.
