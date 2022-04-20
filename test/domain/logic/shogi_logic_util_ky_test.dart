@@ -1,69 +1,83 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
 import 'package:shogi_note/domain/const/piece.dart';
+import 'package:shogi_note/domain/logic/shogi_logic.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
-import 'package:shogi_note/domain/util/shogi_logic_util.dart';
 
 void main() {
-  test('Ka getMovablePositionSet', () {
+  test('Ky getMovablePositionSet', () {
     // Black piece test
     BoardState bsBlackDstNil = BoardState(pieceOnBoard: const [
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstNil, BoardPosition(4, 4)), {
-      BoardPosition(0, 0),
-      BoardPosition(1, 1),
-      BoardPosition(2, 2),
-      BoardPosition(3, 3),
-      BoardPosition(5, 5),
-      BoardPosition(6, 6),
-      BoardPosition(7, 7),
-      BoardPosition(8, 8),
-      BoardPosition(0, 8),
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-      BoardPosition(8, 0),
+    expect(ShogiLogic.getMovablePositionSet(bsBlackDstNil, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
+      BoardPosition(0, 4),
     });
 
-    BoardState bsBlackDstPiece = BoardState(pieceOnBoard: const [
+    BoardState bsBlackDstWhite = BoardState(pieceOnBoard: const [
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wFu, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil],
-      [Piece.wFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackDstPiece, BoardPosition(4, 4)), {
-      BoardPosition(3, 5),
-      BoardPosition(2, 6),
-      BoardPosition(5, 5),
-      BoardPosition(6, 6),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-      BoardPosition(8, 0),
+    expect(ShogiLogic.getMovablePositionSet(bsBlackDstWhite, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
+      BoardPosition(0, 4),
+    });
+
+    BoardState bsBlackDstBlack = BoardState(pieceOnBoard: const [
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+    ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
+
+    expect(ShogiLogic.getMovablePositionSet(bsBlackDstBlack, BoardPosition(8, 4)), {
+      BoardPosition(7, 4),
+      BoardPosition(6, 4),
+      BoardPosition(5, 4),
+      BoardPosition(4, 4),
+      BoardPosition(3, 4),
+      BoardPosition(2, 4),
+      BoardPosition(1, 4),
     });
 
     BoardState bsBlackOutOfBounds = BoardState(pieceOnBoard: const [
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKa],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
@@ -74,97 +88,78 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds, BoardPosition(0, 8)), {
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(4, 4),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-      BoardPosition(8, 0),
-    });
-
-    BoardState bsBlackOutOfBounds2 = BoardState(pieceOnBoard: const [
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.bKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
-    ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.black);
-
-    expect(ShogiLogicUtil.getMovablePositionSet(bsBlackOutOfBounds2, BoardPosition(8, 0)), {
-      BoardPosition(0, 8),
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(4, 4),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-    });
+    expect(ShogiLogic.getMovablePositionSet(bsBlackOutOfBounds, BoardPosition(0, 4)), <BoardPosition>{});
 
     // White piece test
     BoardState bsWhiteDstNil = BoardState(pieceOnBoard: const [
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstNil, BoardPosition(4, 4)), {
-      BoardPosition(0, 0),
-      BoardPosition(1, 1),
-      BoardPosition(2, 2),
-      BoardPosition(3, 3),
-      BoardPosition(5, 5),
-      BoardPosition(6, 6),
-      BoardPosition(7, 7),
-      BoardPosition(8, 8),
-      BoardPosition(0, 8),
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-      BoardPosition(8, 0),
+    expect(ShogiLogic.getMovablePositionSet(bsWhiteDstNil, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
+      BoardPosition(8, 4),
     });
 
-    BoardState bsWhiteDstPiece = BoardState(pieceOnBoard: const [
+    BoardState bsWhiteDstBlack = BoardState(pieceOnBoard: const [
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wFu, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil],
-      [Piece.wFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.bFu, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteDstPiece, BoardPosition(4, 4)), {
-      BoardPosition(3, 3),
-      BoardPosition(3, 5),
-      BoardPosition(5, 5),
-      BoardPosition(6, 6),
-      BoardPosition(7, 7),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
+    expect(ShogiLogic.getMovablePositionSet(bsWhiteDstBlack, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
+      BoardPosition(8, 4),
+    });
+
+    BoardState bsWhiteDstWhite = BoardState(pieceOnBoard: const [
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wGi, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+    ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
+
+    expect(ShogiLogic.getMovablePositionSet(bsWhiteDstWhite, BoardPosition(0, 4)), {
+      BoardPosition(1, 4),
+      BoardPosition(2, 4),
+      BoardPosition(3, 4),
+      BoardPosition(4, 4),
+      BoardPosition(5, 4),
+      BoardPosition(6, 4),
+      BoardPosition(7, 4),
     });
 
     BoardState bsWhiteOutOfBounds = BoardState(pieceOnBoard: const [
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKa],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
@@ -172,41 +167,10 @@ void main() {
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
       [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
+      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.wKy, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
     ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
 
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds, BoardPosition(0, 8)), {
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(4, 4),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-      BoardPosition(8, 0),
-    });
-
-    BoardState bsWhiteOutOfBounds2 = BoardState(pieceOnBoard: const [
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil],
-      [Piece.wKa, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil, Piece.nil]
-    ], bHolder: List.empty(), wHolder: List.empty(), color: ActiveColor.white);
-
-    expect(ShogiLogicUtil.getMovablePositionSet(bsWhiteOutOfBounds2, BoardPosition(8, 0)), {
-      BoardPosition(0, 8),
-      BoardPosition(1, 7),
-      BoardPosition(2, 6),
-      BoardPosition(3, 5),
-      BoardPosition(4, 4),
-      BoardPosition(5, 3),
-      BoardPosition(6, 2),
-      BoardPosition(7, 1),
-    });
+    expect(ShogiLogic.getMovablePositionSet(bsWhiteOutOfBounds, BoardPosition(8, 4)), <BoardPosition>{});
   });
 }

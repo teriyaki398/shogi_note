@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shogi_note/domain/builder/block_builder.dart';
 import 'package:shogi_note/domain/builder/board_state_builder.dart';
 import 'package:shogi_note/domain/const/active_color.dart';
+import 'package:shogi_note/domain/const/piece_attributes.dart';
+import 'package:shogi_note/domain/logic/shogi_logic.dart';
 import 'package:shogi_note/domain/model/block.dart';
 import 'package:shogi_note/domain/model/board_position.dart';
 import 'package:shogi_note/domain/model/board_state.dart';
 import 'package:shogi_note/domain/model/piece_move_action.dart';
-import 'package:shogi_note/domain/util/piece_util.dart';
-import 'package:shogi_note/domain/util/shogi_logic_util.dart';
 import 'package:shogi_note/presentation/const/block_mode.dart';
 
 class BlockController with ChangeNotifier {
@@ -44,8 +44,8 @@ class BlockController with ChangeNotifier {
     // Initial holding operation
     if (_holdingPos == null) {
       bool isHoldablePiece = currentBoardState.color == ActiveColor.black
-          ? PieceUtil.isBlackPiece(currentBoardState.getPiece(pos))
-          : PieceUtil.isWhitePiece(currentBoardState.getPiece(pos));
+          ? PieceAttributes.isBlackPiece(currentBoardState.getPiece(pos))
+          : PieceAttributes.isWhitePiece(currentBoardState.getPiece(pos));
 
       if (isHoldablePiece) {
         _holdingPos = pos;
@@ -64,8 +64,8 @@ class BlockController with ChangeNotifier {
     // Consume holdingPos and apply move action if possible
     PieceMoveAction action = PieceMoveAction(src: _holdingPos!, dst: pos);
 
-    if (ShogiLogicUtil.isAcceptableMoveAction(currentBoardState, action)) {
-      if (ShogiLogicUtil.isPromotableAction(currentBoardState.getPiece(action.src), action)) {
+    if (ShogiLogic.isAcceptableMoveAction(currentBoardState, action)) {
+      if (ShogiLogic.isPromotableAction(currentBoardState.getPiece(action.src), action)) {
         bool doPromote = await showDialog<bool>(
                 context: context,
                 builder: (context) {
@@ -96,10 +96,10 @@ class BlockController with ChangeNotifier {
       BoardState newBoardState = (BoardStateBuilder.ofState(currentBoardState)..movePiece(action)).build();
       _block = (BlockBuilder.ofBlock(_block)..addBoardState(newBoardState)).build();
       _displayBoardStateIndex += 1;
-    }
 
-    _holdingPos = null;
-    notifyListeners();
+      _holdingPos = null;
+      notifyListeners();
+    }
   }
 
   void onClickEditButton() {
